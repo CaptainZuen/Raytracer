@@ -21,10 +21,11 @@ int main () {
 
 
     //Size of the rendered image
-    num a = 2;              //Aspect ratio of width to height (i.e. cmd chars are 8x16, so 2)
-    num pW = 100 * a;        //Pixels wide
-    num pH = 100;            //Pixels high
     
+    num pW = 100;           //Pixels wide
+    num pH = 100;           //Pixels high
+    
+    num aspect = 2;         //Aspect ratio of width to height (i.e. cmd chars are 8x16, so 2)
     bool numbers = true;    //adds row and col numbers
     bool cross = false;     //adds cross in the middle
 
@@ -39,13 +40,14 @@ int main () {
     Spheres.push_back(rt::Sphere(-15, 5, 80, 5));
     Spheres.push_back(rt::Sphere(5, -1, 150, 12));
     Spheres.push_back(rt::Sphere(6, 2, 20, 2));
-    Spheres.push_back(rt::Sphere(0, 0, -10, 10));
+    Spheres.push_back(rt::Sphere(-50, 100, 100, 90));
 
     rs.addObjectList<rt::Sphere>(Spheres);
 
 
     scr screenOne = rs.scan();
-    rs.print(screenOne, numbers, cross);
+    rs.print(screenOne, aspect, numbers, cross);
+    rs.print("Scene_1.txt", aspect, screenOne, numbers, cross);
 
 
     return 0;
