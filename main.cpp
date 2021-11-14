@@ -46,10 +46,12 @@ int main () {
     rs.addObjectList<rt::Sphere>(Spheres);
 
     scr screenOne = rs.scanGrey();
+    scrRGB screenTwo = rs.scanRGB();
 
     IO io = IO();
     io.print(screenOne, aspect, numbers, cross);
     io.print("Scene_1", screenOne, aspect, numbers, cross);
+    io.ppm("Scene_1", screenTwo);
 
 
     return 0;

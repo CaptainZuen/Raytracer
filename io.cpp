@@ -96,3 +96,26 @@ void IO::print(st::string fileName, scr const &screen, num const aspect, bool co
 
     file.close();
 }
+
+void IO::ppm(st::string fileName, scrRGB const &screen){
+    st::ofstream file;
+    file.open(fileName + ".ppm", st::ios::out | st::ios::trunc);
+
+    int pixelHeight = screen.size();
+    int pixelWidth = screen[0].size();
+
+    //P3 ppm format (rgb in ascii), 255 being max value
+    file << "P3\n" << pixelWidth << ' ' << pixelHeight << "\n255\n\n";
+
+    for(int row = 0; row < pixelHeight; row++){
+
+        for(int col = 0; col < pixelWidth; col++){
+
+            file << screen[row][col][0] << ' ' << screen[row][col][1] << ' ' << screen[row][col][2] << '\n';
+            
+        }
+        file << '\n';
+    }
+
+    file.close();
+}
