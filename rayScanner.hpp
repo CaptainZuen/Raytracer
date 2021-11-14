@@ -1,21 +1,18 @@
 #pragma once
 #include <iostream>
 #include <iterator>
-#include <fstream>
 
 #include "vec3D.hpp"
 #include "ray.hpp"
 
 #define scr st::vector<st::vector<int>> 
+#define scrRGB st::vector<st::vector<Vec3D>>
 
-using namespace std;
 
 namespace rayTracer{
 
 class RayScanner{
     protected:
-        st::string chars = " .:-=+*#%@";
-
         num screenDistance;
         num screenWidth;
         num screenHeight;
@@ -29,9 +26,10 @@ class RayScanner{
 
         RayScanner(num screenDistance, num screenWidth, num screenHeight, int pixelWidth, int pixelHeight);
 
-        scr scan(); //renders the screen
-        void print(scr screen, num aspect, bool numbers, bool cross); //add row and col numbers and/or cross in the middle
-        void print(st::string fileName, num aspect, scr screen, bool numbers, bool cross);
+        scr scanGrey(); //renders the screen
+        scrRGB scanRGB();
+        
+        
 
         void addObject(Object* object);
 

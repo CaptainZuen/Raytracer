@@ -9,6 +9,7 @@
 #include "ray.hpp"
 #include "objects.hpp"
 #include "rayScanner.hpp"
+#include "io.hpp"
 
 namespace st = std;
 namespace rt = rayTracer;
@@ -22,10 +23,10 @@ int main () {
 
     //Size of the rendered image
     
-    num pW = 100;           //Pixels wide
-    num pH = 100;           //Pixels high
+    int pW = 200;           //Pixels wide
+    int pH = 100;           //Pixels high
     
-    num aspect = 2;         //Aspect ratio of width to height (i.e. cmd chars are 8x16, so 2)
+    num aspect = 1;         //Aspect ratio of width to height (i.e. cmd chars are 8x16, so 2)
     bool numbers = true;    //adds row and col numbers
     bool cross = false;     //adds cross in the middle
 
@@ -44,10 +45,11 @@ int main () {
 
     rs.addObjectList<rt::Sphere>(Spheres);
 
+    scr screenOne = rs.scanGrey();
 
-    scr screenOne = rs.scan();
-    rs.print(screenOne, aspect, numbers, cross);
-    rs.print("Scene_1.txt", aspect, screenOne, numbers, cross);
+    IO io = IO();
+    io.print(screenOne, aspect, numbers, cross);
+    io.print("Scene_1", screenOne, aspect, numbers, cross);
 
 
     return 0;

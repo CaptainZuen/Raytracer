@@ -17,7 +17,7 @@ void RayScanner::addObject(Object* object){
 
 
 
-scr RayScanner::scan(){
+scr RayScanner::scanGrey(){
     scr screen;
 
     for(int row = 0; row < pixelHeight; row++){
@@ -43,92 +43,26 @@ scr RayScanner::scan(){
     return screen;
 }
 
-void RayScanner::print(scr screen, num aspect, bool numbers, bool cross){
-
-    if(numbers){
-        st::cout << "\t ";
-        for(int i = 0; i < st::to_string(pixelWidth-1).size(); i++){
-            for(int col = 0; col < pixelWidth*aspect; col+=2){
-                st::string s = st::to_string(static_cast<int>(col/aspect));
-                st::cout << s[i] << ' ';
-                s = "           "; //to clear the memory. 3rd digit would remain
-            }
-            st::cout << "\n\t ";
-        }
-        for(int col = 0; col < pixelWidth*aspect; col+=2){
-            st::cout << "_ ";
-        }
-        st::cout << '\n';
-    }
-
+scrRGB RayScanner::scanRGB(){
+    scrRGB screen;
 
     for(int row = 0; row < pixelHeight; row++){
-
-        if(numbers) st::cout << row << "\t|";
-
-        for(int col = 0; col < pixelWidth*aspect; col++){
-            
-            if(cross){
-                if(row == pixelHeight/2){
-                    st::cout << '-';
-                } else if(col == static_cast<int>(pixelWidth*aspect/2)){
-                    st::cout << '|';
-                } else{
-                    st::cout << chars[(screen[row][static_cast<int>(col/aspect)]/255*chars.size())-1];
-                }
-            } else {
-                //prints the char relative to the brightness
-                st::cout << chars[(screen[row][static_cast<int>(col/aspect)]/255*chars.size())-1];
-            }
-        }
-        st::cout << '\n';
-    }
-}
-
-void RayScanner::print(st::string fileName, num aspect, scr screen, bool numbers, bool cross){
-    ofstream file;
-    file.open(fileName, ios::out | ios::trunc);
-
-
-    if(numbers){
-        file << "\t ";
-        for(int i = 0; i < st::to_string(pixelWidth-1).size(); i++){
-            for(int col = 0; col < pixelWidth; col+=2){
-                st::string s = st::to_string(col);
-                file << s[i] << ' ';
-                s = "           "; //to clear the memory. 3rd digit would remain
-            }
-            file << "\n\t ";
-        }
-        for(int col = 0; col < pixelWidth; col+=2){
-            file << "_ ";
-        }
-        file << '\n';
-    }
-
-
-    for(int row = 0; row < pixelHeight; row++){
-
-        if(numbers) file << row << "\t|";
+        st::vector<Vec3D> temp;
 
         for(int col = 0; col < pixelWidth; col++){
             
-            if(cross){
-                if(row == pixelHeight/2){
-                    file << '-';
-                } else if(col == pixelWidth/2){
-                    file << '|';
-                } else{
-                    file << chars[(screen[row][col]/255*chars.size())-1];
-                }
-            } else {
-                //prints the char relative to the brightness
-                file << chars[(screen[row][col]/255*chars.size())-1];
+            num xStart = (col/static_cast<num>(pixelWidth))*screenWidth - screenWidth/2 + 0.5*(screenWidth/pixelWidth);
+            num yStart = -((row/static_cast<num>(pixelHeight))*screenHeight - screenHeight/2 + 0.5*(screenHeight/pixelHeight));
+            
+            if(Ray(xStart, yStart, screenDistance, objects).scan()){
+                temp.push_back(255);
+            }
+            else {
+                temp.push_back(0);
             }
         }
-        file << '\n';
+        screen.push_back(temp);
     }
-
-    file.close();
+    return screen;
 }
 }

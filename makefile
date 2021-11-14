@@ -1,5 +1,5 @@
-output: main.o vec3D.o ray.o objects.o rayScanner.o
-	g++ -std=c++17 main.o vec3D.o ray.o objects.o rayScanner.o -o rayTracer
+output: main.o vec3D.o ray.o objects.o rayScanner.o io.o
+	g++ -std=c++17 main.o vec3D.o ray.o objects.o rayScanner.o io.o -o rayTracer
 
 main.o: main.cpp
 	g++ -c main.cpp
@@ -15,6 +15,9 @@ objects.o: objects.cpp objects.hpp
 
 rayScanner.o: rayScanner.cpp rayScanner.hpp
 	g++ -c rayScanner.cpp
+
+io.o: io.cpp io.hpp
+	g++ -c io.cpp
 
 clean:
 	del *.o rayTracer
