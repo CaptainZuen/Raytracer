@@ -1,3 +1,4 @@
 #Ignore the .o files
 *.o
+#ignore made scenes
 Scene*.*
