@@ -31,12 +31,8 @@ scr RayScanner::scanGrey(){
             num xStart = (col/static_cast<num>(pixelWidth))*screenWidth - screenWidth/2 + 0.5*(screenWidth/pixelWidth);
             num yStart = -((row/static_cast<num>(pixelHeight))*screenHeight - screenHeight/2 + 0.5*(screenHeight/pixelHeight));
             
-            if(Ray(xStart, yStart, screenDistance, objects).scan()){
-                temp.push_back(255);
-            }
-            else {
-                temp.push_back(0);
-            }
+            Vec3D color = Ray(xStart, yStart, screenDistance, objects).scan();
+            temp.push_back((color[0] + color[1] + color[2])/3*255);
         }
         screen.push_back(temp);
     }
@@ -54,12 +50,7 @@ scrRGB RayScanner::scanRGB(){
             num xStart = (col/static_cast<num>(pixelWidth))*screenWidth - screenWidth/2 + 0.5*(screenWidth/pixelWidth);
             num yStart = -((row/static_cast<num>(pixelHeight))*screenHeight - screenHeight/2 + 0.5*(screenHeight/pixelHeight));
             
-            if(Ray(xStart, yStart, screenDistance, objects).scan()){
-                temp.push_back(255);
-            }
-            else {
-                temp.push_back(0);
-            }
+            temp.push_back(Ray(xStart, yStart, screenDistance, objects).scan()*255);
         }
         screen.push_back(temp);
     }

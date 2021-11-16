@@ -27,7 +27,9 @@ class Ray {
 
         Ray(num xStart, num yStart, num screenDistance, VPO &objects);
 
-        bool scan();    //checks objects list if it hits any
+        Vec3D at(num t) const;
+        
+        Vec3D scan();    //checks objects list if it hits any
 
         void show(st::string label);
         

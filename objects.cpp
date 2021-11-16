@@ -3,11 +3,17 @@
 
 namespace rayTracer{
 
-Object::Object(num const x, num const y, num const z):
-    center (x, y, z){
+Object::Object(num const x, num const y, num const z, num const r, num const g, num const b):
+    center (x, y, z),
+    color (r, g, b){
 }
-Object::Object(Vec3D const center):
-    center (center){   
+Object::Object(Vec3D const center, Vec3D const color):
+    center (center),
+    color (color){   
+}
+
+Vec3D Object::getColor(){
+    return color;
 }
 
 
@@ -16,12 +22,12 @@ Object::Object(Vec3D const center):
 //Sphere::
 
 
-Sphere::Sphere(num const x, num const y, num const z, num const radius):
-    Object(x, y, z),
+Sphere::Sphere(num const x, num const y, num const z, num const r, num const g, num const b, num const radius):
+    Object(x, y, z, r, g, b),
     radius (radius){
 }
-Sphere::Sphere(Vec3D const center, num const radius):
-    Object(center),
+Sphere::Sphere(Vec3D const center, Vec3D const color, num const radius):
+    Object(center, color),
     radius (radius){
 }
 
@@ -29,7 +35,7 @@ Sphere::Sphere(Vec3D const center, num const radius):
 
 num Sphere::distRay(Ray const &r) const{
     // num t = r.dir.dot(center - r.sup);     //time on ray (dist from support/origin in direction lengths)
-    // Vec3D p = r.sup + r.dir * t;             //Closest point to center
+    // Vec3D p = r.at(t);             //Closest point to center
     // num distance = (center-p).norm();
     
     //substitution:
@@ -54,10 +60,10 @@ Vec3D Sphere::hitPoint(Ray const &r) const{
     // num t1 = t - sqrt(radius * radius - dis * dis); //sqrt always +, first hitpoint lowest t, so only t-sqrt()
     // num t2 = t + sqrt(radius * radius - dis * dis);
 
-    // Vec3D hitPoint = r.sup + r.dir * t1;
+    // Vec3D hitPoint = r.at(t1);
 
     //substitution:
-    return r.sup + r.dir * ((r.dir.dot(center - r.sup)) - sqrt(radius * radius - dis * dis));
+    return r.at((r.dir.dot(center - r.sup)) - sqrt(radius * radius - dis * dis));
 }
 
 
@@ -69,13 +75,13 @@ Vec3D Sphere::hitPoint(Ray const &r) const{
 
 
 
-Floor::Floor(Vec3D const center, num const tileSize):
-    Object(center),
+Floor::Floor(Vec3D const center, Vec3D const color, num const tileSize):
+    Object(center, color),
     tileSize (tileSize){
 }
 
 bool Floor::hit(Ray &r) const{
-    num t = 0;
+    num t;
     int u; 
     int v; // side/plane ("floor" can be on any axes)
     if(center[0] != 0){
@@ -98,7 +104,7 @@ bool Floor::hit(Ray &r) const{
         return false;
     }
 
-    Vec3D p = r.sup + r.dir * t;
+    Vec3D p = r.at(t);
 
     // shifts over the grid on the negative axes to align
     if(p[u] < 0){
@@ -109,6 +115,7 @@ bool Floor::hit(Ray &r) const{
     }
 
     Vec3D q = p % (tileSize*2);
+
     q.abs();
 
     if((q[u] < tileSize && q[v] < tileSize) || (q[u] >= tileSize && q[v] >= tileSize)){

@@ -13,10 +13,13 @@ class Ray;  //include eachother
 class Object{
     protected:
         Vec3D center;
+        Vec3D color;
 
     public:
-        Object(num const x, num const y, num const z);
-        Object(Vec3D const center);
+        Object(num const x, num const y, num const z, num const r, num const g, num const b);
+        Object(Vec3D const center, Vec3D const color);
+
+        Vec3D getColor();
 
         virtual bool hit(Ray &r) const = 0;
 
@@ -28,8 +31,8 @@ class Sphere: public Object{
 
     public:
 
-        Sphere(num const x, num const y, num const z, num const radius);
-        Sphere(Vec3D const center, num const radius);
+        Sphere(num const x, num const y, num const z, num const r, num const g, num const b, num const radius);
+        Sphere(Vec3D const center, Vec3D const color, num const radius);
 
         num distRay(Ray const &r) const;    //distance to the ray
         bool hit(Ray &r) const;
@@ -43,7 +46,7 @@ class Floor: public Object{
 
     public:
 
-        Floor(Vec3D const center, num const tileSize);
+        Floor(Vec3D const center, Vec3D const color, num const tileSize);
 
         bool hit(Ray &r) const;
 

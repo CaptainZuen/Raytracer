@@ -2,3 +2,5 @@
 *.o
 #ignore made scenes
 Scene*.*
+#ignore vscode
+.vscode/

@@ -18,14 +18,17 @@ Ray::Ray(num xStart, num yStart, num screenDistance, VPO &objects):
     dir = Vec3D(xStart, yStart, screenDistance).unit();
 }
 
+Vec3D Ray::at(num t)const {
+    return sup + t*dir;
+}
 
-bool Ray::scan(){
+Vec3D Ray::scan(){
     for(auto object: objects){
         if(object->hit(*this)){
-            return true;
+            return object->getColor();
         }
     }
-    return false;
+    return Vec3D(1, 1, 1) - ((dir[1] + 1)/2) * Vec3D(0.5, 0.3, 0);
 }
 
 void Ray::show(st::string label){
