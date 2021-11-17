@@ -1,12 +1,10 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include <string>
+#include <string> 
 #include <cmath>
-#include <list>
 
 #define num double
-
 namespace st = std;
 
 namespace rayTracer{

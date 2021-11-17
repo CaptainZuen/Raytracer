@@ -1,19 +1,11 @@
-#include <iostream>
-#include <vector>
-#include <string> 
-#include <stack>
-#include <cmath>
 #include <list>
 #include <chrono>
 
-#include "vec3D.hpp"
-#include "ray.hpp"
+#include "main.hpp"
 #include "objects.hpp"
 #include "rayScanner.hpp"
 #include "io.hpp"
 
-namespace st = std;
-namespace rt = rayTracer;
 
 typedef st::chrono::high_resolution_clock Clock;
 
@@ -40,16 +32,17 @@ int main () {
 
 
 
-    rt::RayScanner rs = rt::RayScanner(d, w, h, pW, pH);
+    rt::RayScanner rs = rt::RayScanner();
 
     rt::Floor f = rt::Floor(rt::Vec3D(0, -4, 0), rt::Vec3D(0, 0, 0), 4);
     rs.addObject(&f);
 
     st::list<rt::Sphere> Spheres;
-    Spheres.push_back(rt::Sphere(rt::Vec3D(-15, 5, 80), rt::Vec3D(1, 0, 1), 5));
+    Spheres.push_back(rt::Sphere(rt::Vec3D(-15, -5, 80), rt::Vec3D(1, 0, 1), 5));
     Spheres.push_back(rt::Sphere(rt::Vec3D(5, -1, 150), rt::Vec3D(0, 1, 1), 12));
-    Spheres.push_back(rt::Sphere(rt::Vec3D(6, 2, 20), rt::Vec3D(1, 1, 0), 2));
-    Spheres.push_back(rt::Sphere(rt::Vec3D(-50, 100, 100), rt::Vec3D(1, 1, 1), 90));
+    Spheres.push_back(rt::Sphere(rt::Vec3D(6, 0, 20), rt::Vec3D(1, 1, 0), 2));
+    Spheres.push_back(rt::Sphere(rt::Vec3D(-40, 100, 400), rt::Vec3D(1, 1, 1), 90));
+    Spheres.push_back(rt::Sphere(rt::Vec3D(0, -4, 15), rt::Vec3D(1, 0, 0), 2));
 
     rs.addObjectList<rt::Sphere>(Spheres);
 
@@ -65,7 +58,8 @@ int main () {
 
     for(int i = 0; i < count; i++){
         start = Clock::now();
-        scrRGB screen_1 = rs.scanRGB();
+
+        scrRGB screen_1 = rs.scanRGB(d, w, h, pW, pH);
         io.ppm("Scene_1", screen_1);
 
         end = Clock::now();

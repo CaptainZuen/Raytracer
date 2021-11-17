@@ -1,10 +1,6 @@
 #pragma once
-#include <iostream>
 
-#include "vec3D.hpp"
-#include "ray.hpp"
-
-namespace st = std;
+#include "main.hpp"
 
 namespace rayTracer{
 

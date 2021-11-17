@@ -23,11 +23,16 @@ Vec3D Ray::at(num t)const {
 }
 
 Vec3D Ray::scan(){
+    Object* current = NULL;
     for(auto object: objects){
         if(object->hit(*this)){
-            return object->getColor();
+            current = object;
         }
     }
+    if(current != NULL){
+        return current->getColor();
+    }
+    
     return Vec3D(1, 1, 1) - ((dir[1] + 1)/2) * Vec3D(0.5, 0.3, 0);
 }
 

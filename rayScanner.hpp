@@ -1,33 +1,27 @@
 #pragma once
-#include <iostream>
 #include <iterator>
+#include <list>
 
-#include "vec3D.hpp"
-#include "ray.hpp"
+#include "main.hpp"
 
+namespace rt = rayTracer;
 #define scr st::vector<st::vector<int>> 
-#define scrRGB st::vector<st::vector<Vec3D>>
+#define scrRGB st::vector<st::vector<rt::Vec3D>>
 
 
 namespace rayTracer{
 
 class RayScanner{
     protected:
-        num screenDistance;
-        num screenWidth;
-        num screenHeight;
-
-        int pixelWidth;
-        int pixelHeight;
-
         VPO objects;
 
     public:
 
-        RayScanner(num screenDistance, num screenWidth, num screenHeight, int pixelWidth, int pixelHeight);
+        RayScanner();
 
-        scr scanGrey(); //renders the screen
-        scrRGB scanRGB();
+        //rendering
+        scr scanGrey(num screenDistance, num screenWidth, num screenHeight, int pixelWidth, int pixelHeight);
+        scrRGB scanRGB(num screenDistance, num screenWidth, num screenHeight, int pixelWidth, int pixelHeight);
         
         
 

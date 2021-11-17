@@ -1,16 +1,9 @@
 #pragma once
-#include <iostream>
 #include <fstream>
-#include <vector>
 
-#include "vec3D.hpp"
+#include "main.hpp"
+#include "rayScanner.hpp"
 
-#define scr st::vector<st::vector<int>> 
-#define scrRGB st::vector<st::vector<rt::Vec3D>>
-
-
-namespace st = std;
-namespace rt = rayTracer;
 
 class IO{
     protected:

@@ -3,13 +3,9 @@
 
 namespace rayTracer{
 
-RayScanner::RayScanner(num screenDistance, num screenWidth, num screenHeight, int pixelWidth, int pixelHeight):
-    screenDistance(screenDistance),
-    screenWidth(screenWidth),
-    screenHeight(screenHeight),
-    pixelWidth(pixelWidth),
-    pixelHeight(pixelHeight){    
-}
+RayScanner::RayScanner(){}
+
+
 
 void RayScanner::addObject(Object* object){
     objects.push_back(object);
@@ -17,7 +13,7 @@ void RayScanner::addObject(Object* object){
 
 
 
-scr RayScanner::scanGrey(){
+scr RayScanner::scanGrey(num screenDistance, num screenWidth, num screenHeight, int pixelWidth, int pixelHeight){
     scr screen;
 
     for(int row = 0; row < pixelHeight; row++){
@@ -39,7 +35,7 @@ scr RayScanner::scanGrey(){
     return screen;
 }
 
-scrRGB RayScanner::scanRGB(){
+scrRGB RayScanner::scanRGB(num screenDistance, num screenWidth, num screenHeight, int pixelWidth, int pixelHeight){
     scrRGB screen;
 
     for(int row = 0; row < pixelHeight; row++){

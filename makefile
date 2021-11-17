@@ -1,7 +1,7 @@
 output: main.o vec3D.o ray.o objects.o rayScanner.o io.o
 	g++ -std=c++17 main.o vec3D.o ray.o objects.o rayScanner.o io.o -o rayTracer
 
-main.o: main.cpp
+main.o: main.cpp main.hpp
 	g++ -c main.cpp
 
 vec3D.o: vec3D.cpp vec3D.hpp

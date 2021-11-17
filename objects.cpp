@@ -43,12 +43,20 @@ num Sphere::distRay(Ray const &r) const{
 }
 
 bool Sphere::hit(Ray &r) const{
-    if(r.dir.dot(center - r.sup) < 0){
+    num t = r.dir.dot(center - r.sup);
+
+    if(t < r.tMin){
         return false; //hits behind support (viewpoint)
     }
 
-    if(this->distRay(r) < radius){  //not = cause it'll go straigth anyway
-        return true;
+    num dis = this->distRay(r);
+
+    if(dis < radius){  //not = cause it'll go straigth anyway
+        num tHit = t - sqrt(radius * radius - dis * dis);
+        if(tHit < r.tMax){
+            r.tMax = tHit;
+            return true;
+        }
     }
     return false; 
 }
@@ -100,7 +108,7 @@ bool Floor::hit(Ray &r) const{
         v = 1;
     }
 
-    if(t < 0){  //hits behind support (viewpoint)
+    if(t < r.tMin){  //hits behind support
         return false;
     }
 
@@ -119,6 +127,7 @@ bool Floor::hit(Ray &r) const{
     q.abs();
 
     if((q[u] < tileSize && q[v] < tileSize) || (q[u] >= tileSize && q[v] >= tileSize)){
+        r.tMax = t;
         return true;
     }
     return false;
