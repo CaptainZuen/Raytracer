@@ -75,6 +75,10 @@ Vec3D Sphere::hitPoint(Ray const &r) const{
 }
 
 
+void Sphere::bounce(Ray&r) const{
+    
+}
+
 
 
 
@@ -108,7 +112,7 @@ bool Floor::hit(Ray &r) const{
         v = 1;
     }
 
-    if(t < r.tMin){  //hits behind support
+    if(t < r.tMin | t > r.tMax){  //hits behind support
         return false;
     }
 
@@ -126,7 +130,7 @@ bool Floor::hit(Ray &r) const{
 
     q.abs();
 
-    if((q[u] < tileSize && q[v] < tileSize) || (q[u] >= tileSize && q[v] >= tileSize)){
+    if((q[u] < tileSize && q[v] < tileSize) | (q[u] >= tileSize && q[v] >= tileSize)){
         r.tMax = t;
         return true;
     }

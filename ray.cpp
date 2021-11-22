@@ -22,7 +22,12 @@ Vec3D Ray::at(num t)const {
     return sup + t*dir;
 }
 
-Vec3D Ray::scan(){
+Vec3D Ray::scan(int bounce){
+    if(bounce >= bounceLimit){
+        return Vec3D();
+    }
+
+    tMax = inf;
     Object* current = NULL;
     for(auto object: objects){
         if(object->hit(*this)){
@@ -30,10 +35,15 @@ Vec3D Ray::scan(){
         }
     }
     if(current != NULL){
-        return current->getColor();
+        current->bounce(*this);        
+        return current->getColor() * this->scan(++bounce);
     }
-    
-    return Vec3D(1, 1, 1) - ((dir[1] + 1)/2) * Vec3D(0.5, 0.3, 0);
+
+    if(bounce == 0){
+        return Vec3D(1) - ((dir[1] + 1)/2) * Vec3D(0.5, 0.3, 0);
+    } else{
+        return Vec3D(1);
+    }
 }
 
 void Ray::show(st::string label){

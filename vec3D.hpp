@@ -31,6 +31,7 @@ class Vec3D {
         Vec3D();
         
         num operator [] (int i) const;
+        void setValue(int index, num value);
 
 
         void show (st::string label) const;
@@ -44,6 +45,9 @@ class Vec3D {
         Vec3D cross (Vec3D const &other) const;     //Cross product
 
         void abs();                                 //Absolute value      
-        void setValue(int index, num value);
+        num angle(Vec3D const &v) const;            //returns angle in rad
+        Vec3D rotX(num const angle) const;
+        Vec3D rotY(num const angle) const;
+        Vec3D rotZ(num constangle) const;
 };
 }

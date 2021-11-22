@@ -35,7 +35,9 @@ num Vec3D::operator [] (int i)const {
     return c[i];
 }
 
-
+void Vec3D::setValue(int index, num value){
+    c[index] = value;
+}
 
 
 void Vec3D::show (st::string label)const { 
@@ -116,7 +118,40 @@ void Vec3D::abs (){
     c[2] = st::abs(c[2]);
 }
 
-void Vec3D::setValue(int index, num value){
-    c[index] = value;
+num Vec3D::angle(Vec3D const &v)const {
+    return st::acos(this->dot(v));
+}
+
+Vec3D Vec3D::rotX(num angle) const{
+    num cos = st::cos(angle);
+    num sin = st::sin(angle);
+
+    num one = c[0];
+    num two = c[1]*cos - c[2]*sin;
+    num thr = c[1]*sin + c[2]*cos;
+
+    return Vec3D(one, two, thr);
+}
+
+Vec3D Vec3D::rotY(num angle) const{
+    num cos = st::cos(angle);
+    num sin = st::sin(angle);
+
+    num one = c[0]*cos + c[2]*sin;
+    num two = c[1];
+    num thr = -c[0]*sin + c[2]*cos;
+
+    return Vec3D(one, two, thr);
+}
+
+Vec3D Vec3D::rotZ(num angle) const{
+    num cos = st::cos(angle);
+    num sin = st::sin(angle);
+
+    num one = c[0]*cos - c[1]*sin;
+    num two = c[0]*sin + c[1]*cos;
+    num thr = c[2]; 
+
+    return Vec3D(c[0]*cos - c[1]*sin, c[0]*sin + c[1]*cos, c[2]);
 }
 }

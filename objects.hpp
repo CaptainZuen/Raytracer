@@ -18,6 +18,9 @@ class Object{
         Vec3D getColor();
 
         virtual bool hit(Ray &r) const = 0;
+        virtual void bounce(Ray &r) const = 0;
+
+        
 
 };
 
@@ -33,6 +36,8 @@ class Sphere: public Object{
         num distRay(Ray const &r) const;    //distance to the ray
         bool hit(Ray &r) const;
         Vec3D hitPoint(Ray const &r) const;
+
+        void bounce(Ray&r) const;
 
 };
 

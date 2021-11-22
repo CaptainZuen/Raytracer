@@ -13,6 +13,7 @@ class Ray {
     
     protected:
         VPO objects;
+        const int bounceLimit = 500;
         
     public:
         Vec3D sup; 
@@ -28,7 +29,7 @@ class Ray {
         Vec3D at(num t) const;
 
         //checks objects list if it hits any, returns color
-        Vec3D scan();    
+        Vec3D scan(int bounce);    
 
         void show(st::string label);
         
