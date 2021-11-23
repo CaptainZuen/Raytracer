@@ -18,7 +18,9 @@ class Object{
         Vec3D getColor();
         Vec3D normalOut(Vec3D const &hitPoint) const;
 
-        virtual bool hit(Ray &r) const = 0;
+        Vec3D reflectMirrored(Ray const &r) const;
+
+        virtual num hit(Ray const &r) const = 0;
         virtual void bounce(Ray &r) const = 0;      
 
 };
@@ -33,7 +35,7 @@ class Sphere: public Object{
         Sphere(Vec3D const center, Vec3D const color, num const radius);
 
         num distRay(Ray const &r) const;    //distance to the ray
-        bool hit(Ray &r) const;
+        num hit(Ray const &r) const;
         Vec3D hitPoint(Ray const &r) const;
 
         void bounce(Ray&r) const;
@@ -43,12 +45,15 @@ class Sphere: public Object{
 class Floor: public Object{
     protected:
         num tileSize;
+        int plane;
+        int otherPlaneOne;
+        int otherPlaneTwo;
 
     public:
 
         Floor(Vec3D const center, Vec3D const color, num const tileSize);
 
-        bool hit(Ray &r) const;
+        num hit(Ray const &r) const;
 
 
 };

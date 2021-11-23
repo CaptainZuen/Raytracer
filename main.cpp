@@ -29,19 +29,21 @@ int main () {
     bool cross = false;     //adds cross in the middle
 
 
-    rt::Vec3D one = rt::Vec3D(1,0,0);
-    rt::Vec3D two = rt::Vec3D(0,1,0);
-    rt::Vec3D three = rt::Vec3D(0,0,1);
+    // rt::Vec3D one = rt::Vec3D(1,0,0);
+    // rt::Vec3D two = rt::Vec3D(0,1,0);
+    // rt::Vec3D three = rt::Vec3D(0,0,1);
 
-    st::cout << one.angle(two)/pi*180 << '\n';
-    rt::Vec3D result = one.rotZ(one.angle(two));
-    result.show("Rotate");
-    st::cout << result.angle(one)/pi*180 << '\n';
-    st::cout << result.angle(two)/pi*180 << '\n';
+    // st::cout << one.angle(two)/pi*180 << '\n';
+    // rt::Vec3D result = one.rotZ(one.angle(two));
+    // result.show("Rotate");
+    // st::cout << result.angle(one)/pi*180 << '\n';
+    // st::cout << result.angle(two)/pi*180 << '\n';
 
-    rt::Sphere s = rt::Sphere(rt::Vec3D(10, 10, 0), rt::Vec3D(1, 0, 0), 10);
-    s.normalOut(rt::Vec3D(10, 0, 0)).show("normal");
+    rt::Sphere s = rt::Sphere(rt::Vec3D(-9, 0, 0), rt::Vec3D(1, 0, 0), 10);
+    // s.normalOut(rt::Vec3D(10, 0, 0)).show("normal");
 
+    rt::Ray r = rt::Ray(0, 0, 0, 1, 0, 0);
+    st::cout << s.hit(r) << " t\n";
 
     // rt::RayScanner rs = rt::RayScanner();
 

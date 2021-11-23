@@ -26,7 +26,7 @@ class Ray {
 
         Ray(num xStart, num yStart, num screenDistance, VPO &objects);
 
-        Vec3D at(num t) const;
+        Vec3D at(num const &t) const;
 
         //checks objects list if it hits any, returns color
         Vec3D scan(int bounce);    

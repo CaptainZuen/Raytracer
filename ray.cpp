@@ -18,7 +18,7 @@ Ray::Ray(num xStart, num yStart, num screenDistance, VPO &objects):
     dir = Vec3D(xStart, yStart, screenDistance).unit();
 }
 
-Vec3D Ray::at(num t)const {
+Vec3D Ray::at(num const &t)const {
     return sup + t*dir;
 }
 
