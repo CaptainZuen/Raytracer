@@ -16,7 +16,9 @@ Vec3D Object::getColor(){
     return color;
 }
 
-
+Vec3D Object::normalOut(Vec3D const &hitPoint) const{
+    return (hitPoint-center).unit();
+}
 
 //-----------------------------------------------------------------------------------------
 //Sphere::
@@ -76,7 +78,7 @@ Vec3D Sphere::hitPoint(Ray const &r) const{
 
 
 void Sphere::bounce(Ray&r) const{
-    
+
 }
 
 

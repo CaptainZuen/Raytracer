@@ -39,7 +39,8 @@ int main () {
     st::cout << result.angle(one)/pi*180 << '\n';
     st::cout << result.angle(two)/pi*180 << '\n';
 
-
+    rt::Sphere s = rt::Sphere(rt::Vec3D(10, 10, 0), rt::Vec3D(1, 0, 0), 10);
+    s.normalOut(rt::Vec3D(10, 0, 0)).show("normal");
 
 
     // rt::RayScanner rs = rt::RayScanner();

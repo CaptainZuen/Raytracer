@@ -16,11 +16,10 @@ class Object{
         Object(Vec3D const center, Vec3D const color);
 
         Vec3D getColor();
+        Vec3D normalOut(Vec3D const &hitPoint) const;
 
         virtual bool hit(Ray &r) const = 0;
-        virtual void bounce(Ray &r) const = 0;
-
-        
+        virtual void bounce(Ray &r) const = 0;      
 
 };
 
