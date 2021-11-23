@@ -24,13 +24,15 @@ Vec3D Ray::at(num const &t)const {
 
 Vec3D Ray::scan(int bounce){
     if(bounce >= bounceLimit){
-        return Vec3D();
+        return Vec3D(1);
     }
 
     tMax = inf;
     Object* current = NULL;
     for(auto object: objects){
-        if(object->hit(*this)){
+        num t = object->hit(*this);
+        if(t > tMin && t < tMax){
+            tMax = t;
             current = object;
         }
     }

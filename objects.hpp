@@ -37,8 +37,7 @@ class Sphere: public Object{
         num distRay(Ray const &r) const;    //distance to the ray
         num hit(Ray const &r) const;
         Vec3D hitPoint(Ray const &r) const;
-
-        void bounce(Ray&r) const;
+        void bounce(Ray &r) const;
 
 };
 
@@ -54,6 +53,7 @@ class Floor: public Object{
         Floor(Vec3D const center, Vec3D const color, num const tileSize);
 
         num hit(Ray const &r) const;
+        void bounce(Ray &r) const;
 
 
 };

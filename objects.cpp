@@ -136,4 +136,9 @@ num Floor::hit(Ray const &r) const{
     }
     return -1;
 }
+
+void Floor::bounce(Ray &r) const{
+
+}
+
 }
