@@ -13,8 +13,8 @@ class Object{
         int reflection = 2;
 
     public:
-        Object(num const x, num const y, num const z, num const r, num const g, num const b);
-        Object(Vec3D const center, Vec3D const color);
+        Object(num const x, num const y, num const z, num const r, num const g, num const b, int const reflection);
+        Object(Vec3D const center, Vec3D const color, int const reflection);
 
         Vec3D getColor();
         Vec3D normalOut(Vec3D const &hitPoint) const;
@@ -33,8 +33,8 @@ class Sphere: public Object{
 
     public:
 
-        Sphere(num const x, num const y, num const z, num const r, num const g, num const b, num const radius);
-        Sphere(Vec3D const center, Vec3D const color, num const radius);
+        Sphere(num const x, num const y, num const z, num const r, num const g, num const b, num const radius, int const reflection);
+        Sphere(Vec3D const center, Vec3D const color, num const radius, int const reflection);
 
         num distRay(Ray const &r) const;    //distance to the ray
         num hit(Ray const &r) const;
@@ -51,7 +51,7 @@ class Floor: public Object{
 
     public:
 
-        Floor(Vec3D const center, Vec3D const color, num const tileSize);
+        Floor(Vec3D const center, Vec3D const color, num const tileSize, int const reflection);
 
         num hit(Ray const &r) const;
 

@@ -3,13 +3,15 @@
 
 namespace rayTracer{
 
-Object::Object(num const x, num const y, num const z, num const r, num const g, num const b):
+Object::Object(num const x, num const y, num const z, num const r, num const g, num const b, int const reflection):
     center (x, y, z),
-    color (r, g, b){
+    color (r, g, b),
+    reflection (reflection){
 }
-Object::Object(Vec3D const center, Vec3D const color):
+Object::Object(Vec3D const center, Vec3D const color, int const reflection):
     center (center),
-    color (color){   
+    color (color),
+    reflection (reflection){   
 }
 
 Vec3D Object::getColor(){
@@ -57,12 +59,12 @@ Vec3D Object::reflectDiffuse(Vec3D const &dir, Vec3D const &hitPoint) const{
 //Sphere::
 
 
-Sphere::Sphere(num const x, num const y, num const z, num const r, num const g, num const b, num const radius):
-    Object(x, y, z, r, g, b),
+Sphere::Sphere(num const x, num const y, num const z, num const r, num const g, num const b, num const radius, int const reflection):
+    Object(x, y, z, r, g, b, reflection),
     radius (radius){
 }
-Sphere::Sphere(Vec3D const center, Vec3D const color, num const radius):
-    Object(center, color),
+Sphere::Sphere(Vec3D const center, Vec3D const color, num const radius, int const reflection):
+    Object(center, color, reflection),
     radius (radius){
 }
 
@@ -117,8 +119,8 @@ Vec3D Sphere::hitPoint(Ray const &r) const{
 
 
 
-Floor::Floor(Vec3D const center, Vec3D const color, num const tileSize):
-    Object(center, color),
+Floor::Floor(Vec3D const center, Vec3D const color, num const tileSize, int const reflection):
+    Object(center, color, reflection),
     tileSize (tileSize){
     if(center[0] != 0){
         plane = 0;

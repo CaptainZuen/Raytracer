@@ -59,18 +59,20 @@ int main () {
     // st::cout << result.angle(normal)/pi*180 << '\n';
     
 
-
     rt::RayScanner rs = rt::RayScanner();
 
-    rt::Floor f = rt::Floor(rt::Vec3D(0, -4, 0), rt::Vec3D(0, 0, 0), 4);
+
+    int const mirror = 1;
+    int const diffuse = 2;
+    rt::Floor f = rt::Floor(rt::Vec3D(0, -4, 0), rt::Vec3D(0, 0, 0), 4, diffuse);
     rs.addObject(&f);
 
     st::list<rt::Sphere> Spheres;
-    Spheres.push_back(rt::Sphere(rt::Vec3D(-4, -1, 17), rt::Vec3D(1, 0, 1), 1));
-    Spheres.push_back(rt::Sphere(rt::Vec3D(5, -1, 150), rt::Vec3D(0, 1, 1), 12));
-    Spheres.push_back(rt::Sphere(rt::Vec3D(3, 0, 13), rt::Vec3D(1, 1, 0), 0.5));
-    Spheres.push_back(rt::Sphere(rt::Vec3D(0, -300, 15), rt::Vec3D(0.9, 0.9, 0.9), 297));
-    Spheres.push_back(rt::Sphere(rt::Vec3D(0, 0, 15), rt::Vec3D(0.8, 0.8, 0.8), 3));
+    Spheres.push_back(rt::Sphere(rt::Vec3D(-4, -1, 17), rt::Vec3D(1, 0, 1), 1, diffuse));
+    Spheres.push_back(rt::Sphere(rt::Vec3D(5, -1, 150), rt::Vec3D(0, 1, 1), 12, diffuse));
+    Spheres.push_back(rt::Sphere(rt::Vec3D(3, 0, 13), rt::Vec3D(1, 1, 0), 0.5, mirror));
+    Spheres.push_back(rt::Sphere(rt::Vec3D(0, -300, 15), rt::Vec3D(0.9, 0.9, 0.9), 297, diffuse));
+    Spheres.push_back(rt::Sphere(rt::Vec3D(0, 0, 15), rt::Vec3D(0.5, 0.8, 0.8), 3, diffuse));
 
     rs.addObjectList<rt::Sphere>(Spheres);
 
