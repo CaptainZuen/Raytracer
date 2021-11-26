@@ -20,6 +20,39 @@ Vec3D Object::normalOut(Vec3D const &hitPoint) const{
     return (hitPoint-center).unit();
 }
 
+Vec3D Object::bounce(Vec3D const &dir, Vec3D const &hitPoint) const{
+    switch(reflection){
+        case 1:
+            return this->reflectMirrored(dir, hitPoint);
+            break;
+        case 2:
+            return this->reflectDiffuse(dir, hitPoint);
+            break;
+    }
+    return Vec3D();
+}
+
+Vec3D Object::reflectMirrored(Vec3D const &dir, Vec3D const &hitPoint) const{
+    Vec3D normal = this->normalOut(hitPoint);
+    if(normal.dot(dir) > 0.){
+        normal = -normal;
+    }
+    return dir - 2*dir.dot(normal)*normal;
+}
+
+Vec3D Object::reflectDiffuse(Vec3D const &dir, Vec3D const &hitPoint) const{
+    Vec3D normal = this->normalOut(hitPoint);
+    if(normal.dot(dir) > 0.){
+        normal = -normal;
+    }
+    Vec3D random = normal.random();
+    if(normal.dot(random) < 0.){
+        random = -random;
+    }
+    return random;
+}
+
+
 //-----------------------------------------------------------------------------------------
 //Sphere::
 
@@ -77,11 +110,6 @@ Vec3D Sphere::hitPoint(Ray const &r) const{
 }
 
 
-void Sphere::bounce(Ray&r) const{
-
-}
-
-
 
 
 //------------------------------------------------------------------------------------------
@@ -136,9 +164,4 @@ num Floor::hit(Ray const &r) const{
     }
     return -1;
 }
-
-void Floor::bounce(Ray &r) const{
-
-}
-
 }

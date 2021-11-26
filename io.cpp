@@ -111,7 +111,9 @@ void IO::ppm(st::string fileName, scrRGB const &screen){
 
         for(int col = 0; col < pixelWidth; col++){
 
-            file << screen[row][col][0] << ' ' << screen[row][col][1] << ' ' << screen[row][col][2] << '\n';
+            file    << static_cast<int>(screen[row][col][0]*255.999) << ' ' 
+                    << static_cast<int>(screen[row][col][1]*255.999) << ' ' 
+                    << static_cast<int>(screen[row][col][2]*255.999) << '\n';
             
         }
         file << '\n';

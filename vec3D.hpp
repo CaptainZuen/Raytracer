@@ -49,5 +49,7 @@ class Vec3D {
         Vec3D rotX(num const angle) const;
         Vec3D rotY(num const angle) const;
         Vec3D rotZ(num constangle) const;
+
+        Vec3D random() const;                       //return a random unit vector
 };
 }

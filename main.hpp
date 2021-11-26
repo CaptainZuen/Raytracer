@@ -9,8 +9,11 @@
 #include <string> 
 #include <cmath>
 #include <limits>
+#include <stdlib.h>
+#include <time.h>
 
 #include "vec3D.hpp"
+
 
 const num inf = st::numeric_limits<num>::infinity();
 const double pi = 3.1415926535897932385;

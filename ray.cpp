@@ -24,7 +24,7 @@ Vec3D Ray::at(num const &t)const {
 
 Vec3D Ray::scan(int bounce){
     if(bounce >= bounceLimit){
-        return Vec3D(1);
+        return Vec3D();
     }
 
     tMax = inf;
@@ -37,8 +37,9 @@ Vec3D Ray::scan(int bounce){
         }
     }
     if(current != NULL){
-        current->bounce(*this);        
-        return current->getColor() * this->scan(++bounce);
+        sup = at(tMax);
+        dir = current->bounce(dir, sup);        
+        return current->getColor() * scan(++bounce);
     }
 
     if(bounce == 0){

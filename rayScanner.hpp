@@ -21,7 +21,7 @@ class RayScanner{
 
         //rendering
         scr scanGrey(num screenDistance, num screenWidth, num screenHeight, int pixelWidth, int pixelHeight);
-        scrRGB scanRGB(num screenDistance, num screenWidth, num screenHeight, int pixelWidth, int pixelHeight);
+        scrRGB scanRGB(num const screenDistance, num const screenWidth, num const screenHeight, int const pixelWidth, int const pixelHeight, int const raysPPixel);
         
         
 

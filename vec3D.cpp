@@ -154,4 +154,13 @@ Vec3D Vec3D::rotZ(num angle) const{
 
     return Vec3D(c[0]*cos - c[1]*sin, c[0]*sin + c[1]*cos, c[2]);
 }
+
+Vec3D Vec3D::random() const{
+    num r =  RAND_MAX/2;
+    num x = rand() - r;
+    num y = rand() - r;
+    num z = rand() - r;
+
+    return Vec3D(x, y, z).unit();
+}
 }
