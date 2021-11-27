@@ -18,10 +18,6 @@ Vec3D Object::getColor(){
     return color;
 }
 
-Vec3D Object::normalOut(Vec3D const &hitPoint) const{
-    return (hitPoint-center).unit();
-}
-
 Vec3D Object::bounce(Vec3D const &dir, Vec3D const &hitPoint) const{
     switch(reflection){
         case 1:
@@ -68,8 +64,11 @@ Sphere::Sphere(Vec3D const center, Vec3D const color, num const radius, int cons
     radius (radius){
 }
 
- 
 
+Vec3D Sphere::normalOut(Vec3D const &hitPoint) const{
+    return (hitPoint-center).unit();
+}
+ 
 num Sphere::distRay(Ray const &r) const{
     // num t = r.dir.dot(center - r.sup);     //time on ray (dist from support/origin in direction lengths)
     // Vec3D p = r.at(t);             //Closest point to center
@@ -125,7 +124,7 @@ Floor::Floor(Vec3D const center, Vec3D const color, num const tileSize, int cons
     if(center[0] != 0){
         plane = 0;
         otherPlaneOne = 1;
-        otherPlaneTwo = 2;  
+        otherPlaneTwo = 2; 
     }
     else if(center[1] != 0){
         plane = 1;
@@ -137,6 +136,12 @@ Floor::Floor(Vec3D const center, Vec3D const color, num const tileSize, int cons
         otherPlaneOne = 0;
         otherPlaneTwo = 1;
     }
+}
+
+Vec3D Floor::normalOut(Vec3D const &hitPoint) const{
+    Vec3D temp = Vec3D();
+    temp.setValue(plane, 1);
+    return temp;
 }
 
 num Floor::hit(Ray const &r) const{

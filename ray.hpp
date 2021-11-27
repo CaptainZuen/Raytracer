@@ -13,7 +13,6 @@ class Ray {
     
     protected:
         VPO objects;
-        const int bounceLimit = 100;
         
     public:
         Vec3D sup; 

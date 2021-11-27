@@ -64,15 +64,21 @@ int main () {
 
     int const mirror = 1;
     int const diffuse = 2;
-    rt::Floor f = rt::Floor(rt::Vec3D(0, -4, 0), rt::Vec3D(0, 0, 0), 4, diffuse);
+    rt::Floor f = rt::Floor(rt::Vec3D(0, -3, 0), rt::Vec3D(0.6, 0, 1), 4, diffuse);
     rs.addObject(&f);
 
     st::list<rt::Sphere> Spheres;
-    Spheres.push_back(rt::Sphere(rt::Vec3D(-4, -1, 17), rt::Vec3D(1, 0, 1), 1, diffuse));
-    Spheres.push_back(rt::Sphere(rt::Vec3D(5, -1, 150), rt::Vec3D(0, 1, 1), 12, diffuse));
-    Spheres.push_back(rt::Sphere(rt::Vec3D(3, 0, 13), rt::Vec3D(1, 1, 0), 0.5, mirror));
+    Spheres.push_back(rt::Sphere(rt::Vec3D(-4, -2, 16), rt::Vec3D(1, 0, 1), 1, diffuse));
+    Spheres.push_back(rt::Sphere(rt::Vec3D(-6, -1 , 22), rt::Vec3D(0, 1, 0), 2, diffuse));
+
+    Spheres.push_back(rt::Sphere(rt::Vec3D(2, -2.5, 13.5), rt::Vec3D(1, 1, 0), 0.5, mirror));
+    Spheres.push_back(rt::Sphere(rt::Vec3D(9, 3, 40), rt::Vec3D(0.95, 0.95, 0.95), 6, mirror));
+    Spheres.push_back(rt::Sphere(rt::Vec3D(0, 11, 24), rt::Vec3D(0.95, 0.95, 0.95), 10, mirror));
+
     Spheres.push_back(rt::Sphere(rt::Vec3D(0, -300, 15), rt::Vec3D(0.9, 0.9, 0.9), 297, diffuse));
     Spheres.push_back(rt::Sphere(rt::Vec3D(0, 0, 15), rt::Vec3D(0.5, 0.8, 0.8), 3, diffuse));
+
+    Spheres.push_back(rt::Sphere(rt::Vec3D(15, 0, -18), rt::Vec3D(1, 0, 0.5), 15, diffuse));
 
     rs.addObjectList<rt::Sphere>(Spheres);
 
@@ -98,22 +104,25 @@ int main () {
 
 
 
-    // st::chrono::duration<double, st::milli> time;
-    // st::chrono::_V2::system_clock::time_point start;
-    // st::chrono::_V2::system_clock::time_point end;
-    // int count = 1;
+    st::chrono::duration<double, st::milli> time;
+    st::chrono::_V2::system_clock::time_point start;
+    st::chrono::_V2::system_clock::time_point end;
+    int count = 1;
 
-    // for(int i = 0; i < count; i++){
-    //     start = Clock::now();
+    for(int i = 0; i < count; i++){
+        start = Clock::now();
+
 
         scrRGB screen_1 = rs.scanRGB(d, w, h, pW, pH, rpP);
         io.ppm("Scene_1", screen_1);
 
-    //     end = Clock::now();
-    //     time+= end-start;
-    // }
 
-    // st::cout << "Average over " << count << ": " << (time/count).count() << "ms\n";
+
+        end = Clock::now();
+        time+= end-start;
+    }
+
+    st::cout << "Average over " << count << ": " << (time/count).count() << "ms\n";
 
 
     return 0;

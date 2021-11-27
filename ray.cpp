@@ -23,7 +23,7 @@ Vec3D Ray::at(num const &t)const {
 }
 
 Vec3D Ray::scan(int bounce){
-    if(bounce >= bounceLimit){
+    if(bounce <= 0){
         return Vec3D();
     }
 
@@ -39,14 +39,11 @@ Vec3D Ray::scan(int bounce){
     if(current != NULL){
         sup = at(tMax);
         dir = current->bounce(dir, sup);        
-        return current->getColor() * scan(++bounce);
+        return current->getColor() * scan(--bounce);
     }
 
-    if(bounce == 0){
-        return Vec3D(1) - ((dir[1] + 1)/2) * Vec3D(0.5, 0.3, 0);
-    } else{
-        return Vec3D(1);
-    }
+    return Vec3D(1) - ((dir[1] + 1)/2) * Vec3D(0.5, 0.3, 0);
+
 }
 
 void Ray::show(st::string label){
