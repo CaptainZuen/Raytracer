@@ -99,7 +99,7 @@ void IO::print(st::string fileName, scr const &screen, num const aspect, bool co
 
 void IO::ppm(st::string fileName, scrRGB const &screen){
     st::ofstream file;
-    file.open(fileName + ".ppm", st::ios::out | st::ios::trunc);
+    file.open("scenes/" + fileName + ".ppm", st::ios::out | st::ios::trunc);
 
     int pixelHeight = screen.size();
     int pixelWidth = screen[0].size();

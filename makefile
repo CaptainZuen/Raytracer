@@ -10,8 +10,8 @@ vec3D.o: vec3D.cpp vec3D.hpp
 ray.o: ray.cpp ray.hpp
 	g++ -c ray.cpp
 
-objects.o: objects.cpp objects.hpp
-	g++ -c objects.cpp
+objects.o: objects/objects.cpp objects/objects.hpp
+	g++ -c objects/objects.cpp
 
 rayScanner.o: rayScanner.cpp rayScanner.hpp
 	g++ -c rayScanner.cpp

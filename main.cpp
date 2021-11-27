@@ -2,7 +2,7 @@
 #include <chrono>
 
 #include "main.hpp"
-#include "objects.hpp"
+#include "objects/objects.hpp"
 #include "rayScanner.hpp"
 #include "io.hpp"
 
@@ -21,9 +21,9 @@ int main () {
     
     //Size of the rendered image
     
-    int pW = 800;           //Pixels wide
-    int pH = 800;           //Pixels high
-    int rpP = 50;           //Rays per pixel
+    int pW = 1200;           //Pixels wide
+    int pH = 1200;           //Pixels high
+    int rpP = 25;           //Rays per pixel
 
     //only for ascii prints
     num aspect = 1;         //Aspect ratio of width to height (i.e. cmd chars are 8x16, so 2)
@@ -74,6 +74,7 @@ int main () {
     Spheres.push_back(rt::Sphere(rt::Vec3D(2, -2.5, 13.5), rt::Vec3D(1, 1, 0), 0.5, mirror));
     Spheres.push_back(rt::Sphere(rt::Vec3D(9, 3, 40), rt::Vec3D(0.95, 0.95, 0.95), 6, mirror));
     Spheres.push_back(rt::Sphere(rt::Vec3D(0, 11, 24), rt::Vec3D(0.95, 0.95, 0.95), 10, mirror));
+    Spheres.push_back(rt::Sphere(rt::Vec3D(70, 50, -50), rt::Vec3D(0, 1, 1), 50, mirror));
 
     Spheres.push_back(rt::Sphere(rt::Vec3D(0, -300, 15), rt::Vec3D(0.9, 0.9, 0.9), 297, diffuse));
     Spheres.push_back(rt::Sphere(rt::Vec3D(0, 0, 15), rt::Vec3D(0.5, 0.8, 0.8), 3, diffuse));

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "main.hpp"
-#include "objects.hpp"
+#include "objects/objects.hpp"
 
 #define VPO st::vector <Object*>
 

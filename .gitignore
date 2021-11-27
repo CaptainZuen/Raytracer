@@ -4,3 +4,5 @@
 Scene*.*
 #ignore vscode
 .vscode/
+#the scenes
+scenes/

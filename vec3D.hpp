@@ -4,7 +4,7 @@
 #include <string> 
 #include <cmath>
 
-#define num double
+#define num float
 namespace st = std;
 
 namespace rayTracer{
