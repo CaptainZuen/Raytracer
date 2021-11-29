@@ -1,7 +1,17 @@
-//includes overal?
-//ray en objects includen elkaar?
-//hoe netjes? liever dubbel voor duidelijkheid?
-//ifndef??
+/*
+includes overal?
+ray en objects includen elkaar?
+hoe netjes? liever dubbel voor duidelijkheid?
+ifndef??
+
+Read from file
+ppm to png
+multithreading
+vec3D rotates
+
+
+*/
+
 
 #pragma once
 #include <iostream>
@@ -15,8 +25,8 @@
 #include "vec3D.hpp"
 
 
-const num inf = st::numeric_limits<num>::infinity();
-const double pi = 3.1415926535897932385;
+static const num inf = st::numeric_limits<num>::infinity();
+static const double pi = 3.1415926535897932385;
 
 #include "ray.hpp"
 

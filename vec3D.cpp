@@ -31,7 +31,7 @@ Vec3D::Vec3D(){
 
 
 
-num Vec3D::operator [] (int i)const {
+num Vec3D::operator [] (int i) const{
     return c[i];
 }
 
@@ -40,15 +40,16 @@ void Vec3D::setValue(int index, num value){
 }
 
 
-void Vec3D::show (st::string label)const { 
+
+void Vec3D::show(st::string label) const{ 
     st::cout << label << ":\tx=" << c[0] << "\ty=" << c[1] << "\tz=" << c[2] << '\n';
 }
 
-void Vec3D::show (st::string label, num scalar)const { 
+void Vec3D::show(st::string label, num scalar) const{ 
     st::cout << label << " : " << scalar << '\n';
 }
 
-void Vec3D::show ()const { 
+void Vec3D::show() const{ 
     st::cout << '\n';
 }
 
@@ -89,11 +90,11 @@ bool operator > (Vec3D const &v1, Vec3D const &v2){
 
 
 
-num Vec3D::norm ()const { 
+num Vec3D::norm() const{ 
     return sqrt( c[0]*c[0] + c[1]*c[1] + c[2]*c[2] );
 }
 
-Vec3D Vec3D::unit ()const { 
+Vec3D Vec3D::unit() const{ 
     //catches a divide by 0
     if(c[0] == 0 && c[1] == 0 && c[2] == 0){
         return *this;
@@ -103,26 +104,24 @@ Vec3D Vec3D::unit ()const {
     }
 }
 
-num Vec3D::dot (Vec3D const &other)const { 
+num Vec3D::dot(Vec3D const &other) const{ 
     return c[0]*other[0] + c[1]*other[1] + c[2]*other[2];
 } 
                                         
-Vec3D Vec3D::cross (Vec3D const &other)const { 
+Vec3D Vec3D::cross(Vec3D const &other) const{ 
     return Vec3D( c[1]*other[2] - c[2]*other[1], c[2]*other[0] - c[0]*other[2], c[0]*other[1] - c[1]*other[0]);
 } 
 
 
-void Vec3D::abs (){
-    c[0] = st::abs(c[0]);
-    c[1] = st::abs(c[1]);
-    c[2] = st::abs(c[2]);
+Vec3D Vec3D::abs() const{
+    return Vec3D(st::abs(c[0]), st::abs(c[1]), st::abs(c[2]));
 }
 
 num Vec3D::angle(Vec3D const &v)const {
     return st::acos(this->dot(v));
 }
 
-Vec3D Vec3D::rotX(num angle) const{
+Vec3D Vec3D::rotX(num const angle) const{
     num cos = st::cos(angle);
     num sin = st::sin(angle);
 
@@ -133,7 +132,7 @@ Vec3D Vec3D::rotX(num angle) const{
     return Vec3D(one, two, thr);
 }
 
-Vec3D Vec3D::rotY(num angle) const{
+Vec3D Vec3D::rotY(num const angle) const{
     num cos = st::cos(angle);
     num sin = st::sin(angle);
 
@@ -144,7 +143,7 @@ Vec3D Vec3D::rotY(num angle) const{
     return Vec3D(one, two, thr);
 }
 
-Vec3D Vec3D::rotZ(num angle) const{
+Vec3D Vec3D::rotZ(num const angle) const{
     num cos = st::cos(angle);
     num sin = st::sin(angle);
 

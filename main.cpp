@@ -1,6 +1,8 @@
 #include <list>
 #include <chrono>
 
+#include <thread>
+
 #include "main.hpp"
 #include "objects/objects.hpp"
 #include "rayScanner.hpp"
@@ -14,21 +16,21 @@ int main () {
     IO io = IO();
     srand(time(NULL));
 
-    num d = 3;              //Distance to screen
-    num w = 2;              //Width of screen
-    num h = 2;              //Heigth of screen
+    static const num d = 3;              //Distance to screen
+    static const num w = 2;              //Width of screen
+    static const num h = 2;              //Heigth of screen
 
     
     //Size of the rendered image
     
-    int pW = 1200;           //Pixels wide
-    int pH = 1200;           //Pixels high
-    int rpP = 25;           //Rays per pixel
+    static const int pW = 800;           //Pixels wide
+    static const int pH = 800;           //Pixels high
+    static const int rpP = 25;           //Rays per pixel
 
     //only for ascii prints
-    num aspect = 1;         //Aspect ratio of width to height (i.e. cmd chars are 8x16, so 2)
-    bool numbers = true;    //adds row and col numbers
-    bool cross = false;     //adds cross in the middle
+    static const num aspect = 1;         //Aspect ratio of width to height (i.e. cmd chars are 8x16, so 2)
+    static const bool numbers = true;    //adds row and col numbers
+    static const bool cross = false;     //adds cross in the middle
 
 
     // rt::Vec3D one = rt::Vec3D(1,0,0);
@@ -70,8 +72,9 @@ int main () {
     st::list<rt::Sphere> Spheres;
     Spheres.push_back(rt::Sphere(rt::Vec3D(-4, -2, 16), rt::Vec3D(1, 0, 1), 1, diffuse));
     Spheres.push_back(rt::Sphere(rt::Vec3D(-6, -1 , 22), rt::Vec3D(0, 1, 0), 2, diffuse));
+    Spheres.push_back(rt::Sphere(rt::Vec3D(4, -1.5 , 9), rt::Vec3D(1, 0.6, 0), 1.5, diffuse));
 
-    Spheres.push_back(rt::Sphere(rt::Vec3D(2, -2.5, 13.5), rt::Vec3D(1, 1, 0), 0.5, mirror));
+    Spheres.push_back(rt::Sphere(rt::Vec3D(2, -2.5, 13.5), rt::Vec3D(1, 1, 0), 0.6, mirror));
     Spheres.push_back(rt::Sphere(rt::Vec3D(9, 3, 40), rt::Vec3D(0.95, 0.95, 0.95), 6, mirror));
     Spheres.push_back(rt::Sphere(rt::Vec3D(0, 11, 24), rt::Vec3D(0.95, 0.95, 0.95), 10, mirror));
     Spheres.push_back(rt::Sphere(rt::Vec3D(70, 50, -50), rt::Vec3D(0, 1, 1), 50, mirror));
@@ -114,7 +117,7 @@ int main () {
         start = Clock::now();
 
 
-        scrRGB screen_1 = rs.scanRGB(d, w, h, pW, pH, rpP);
+        scr screen_1 = rs.scan(d, w, h, pW, pH, rpP);
         io.ppm("Scene_1", screen_1);
 
 

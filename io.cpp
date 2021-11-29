@@ -30,18 +30,17 @@ void IO::print(scr const &screen, num const aspect, bool const numbers, bool con
 
         for(int col = 0; col < pixelWidth*aspect; col++){
             
-            if(cross){
-                if(row == pixelHeight/2){
-                    st::cout << '-';
-                } else if(col == static_cast<int>(pixelWidth*aspect/2)){
-                    st::cout << '|';
-                } else{
-                    st::cout << chars[(screen[row][static_cast<int>(col/aspect)]/255*chars.size())-1];
-                }
-            } else {
+            if(cross && row == pixelHeight/2){
+                st::cout << '-';
+            } else if(cross && col == static_cast<int>(pixelWidth*aspect/2)){
+                st::cout << '|';
+            } else{
                 //prints the char relative to the brightness
-                st::cout << chars[(screen[row][static_cast<int>(col/aspect)]/255*chars.size())-1];
+                int const colAspect = static_cast<int>(col/aspect);
+                num const temp = (screen[row][colAspect][0] + screen[row][colAspect][1] + screen[row][colAspect][2])/3;
+                st::cout << chars[(temp*chars.size())-1];
             }
+            
         }
         st::cout << '\n';
     }
@@ -78,17 +77,12 @@ void IO::print(st::string fileName, scr const &screen, num const aspect, bool co
 
         for(int col = 0; col < pixelWidth; col++){
             
-            if(cross){
-                if(row == pixelHeight/2){
-                    file << '-';
-                } else if(col == pixelWidth/2){
-                    file << '|';
-                } else{
-                    file << chars[(screen[row][col]/255*chars.size())-1];
-                }
-            } else {
-                //prints the char relative to the brightness
-                file << chars[(screen[row][col]/255*chars.size())-1];
+            if(cross && row == pixelHeight/2){
+                file << '-';
+            } else if(cross && col == pixelWidth/2){
+                file << '|';
+            } else{
+                file << chars[((screen[row][col][0] + screen[row][col][1] + screen[row][col][2])/3*chars.size())-1];
             }
         }
         file << '\n';
@@ -97,7 +91,7 @@ void IO::print(st::string fileName, scr const &screen, num const aspect, bool co
     file.close();
 }
 
-void IO::ppm(st::string fileName, scrRGB const &screen){
+void IO::ppm(st::string fileName, scr const &screen){
     st::ofstream file;
     file.open("scenes/" + fileName + ".ppm", st::ios::out | st::ios::trunc);
 

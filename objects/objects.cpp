@@ -164,7 +164,7 @@ num Floor::hit(Ray const &r) const{
 
     Vec3D q = p % (tileSize*2);
 
-    q.abs();
+    q = q.abs();
 
     if((q[otherPlaneOne] < tileSize && q[otherPlaneTwo] < tileSize) | (q[otherPlaneOne] >= tileSize && q[otherPlaneTwo] >= tileSize)){
         return t;

@@ -44,11 +44,11 @@ class Vec3D {
         num dot (Vec3D const &other) const;         //Dot product
         Vec3D cross (Vec3D const &other) const;     //Cross product
 
-        void abs();                                 //Absolute value      
+        Vec3D abs() const;                          //Absolute value      
         num angle(Vec3D const &v) const;            //returns angle in rad
         Vec3D rotX(num const angle) const;
         Vec3D rotY(num const angle) const;
-        Vec3D rotZ(num constangle) const;
+        Vec3D rotZ(num const angle) const;
 
         Vec3D random() const;                       //return a random unit vector
 };
