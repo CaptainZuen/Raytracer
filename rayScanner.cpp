@@ -48,12 +48,10 @@ scr RayScanner::scan(num const screenDistance, num const screenWidth, num const 
                     Vec3D random = pixelColors.random();
                     num x = xStart + halfPixelWidth * random[0];
                     num y = yStart + halfPixelHeight * random[1];
-                    // pixelColors = pixelColors + Ray(x, y, screenDistance, objects).scan(bounceLimit);
                     pixelColors = pixelColors + Ray(x, y, screenDistance).scan(objects, bounceLimit);
                 }
                 temp.push_back(pixelColors/raysPPixel);
             } else{
-                // temp.push_back(Ray(xStart, yStart, screenDistance, objects).scan(bounceLimit));
                 temp.push_back(Ray(xStart, yStart, screenDistance).scan(objects, bounceLimit));
 
             }

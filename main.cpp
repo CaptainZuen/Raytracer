@@ -23,9 +23,9 @@ int main () {
     
     //Size of the rendered image
     
-    static const int pW = 800;           //Pixels wide
-    static const int pH = 800;           //Pixels high
-    static const int rpP = 25;           //Rays per pixel
+    static const int pW = 400;           //Pixels wide
+    static const int pH = 400;           //Pixels high
+    static const int rpP = 10;           //Rays per pixel
 
     //only for ascii prints
     static const num aspect = 1;         //Aspect ratio of width to height (i.e. cmd chars are 8x16, so 2)

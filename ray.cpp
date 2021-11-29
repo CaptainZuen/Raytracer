@@ -12,12 +12,6 @@ Ray::Ray (Vec3D const &sup, Vec3D const &dir)
     :sup (sup), dir (dir){
 }
 
-// Ray::Ray(num const xStart, num const yStart, num const screenDistance, VPO const &objects):
-//     objects (objects){
-//     sup = Vec3D(0, 0, -screenDistance);
-//     dir = Vec3D(xStart, yStart, screenDistance).unit();
-// }
-
 Ray::Ray(num const xStart, num const yStart, num const screenDistance){
     sup = Vec3D(0, 0, -screenDistance);
     dir = Vec3D(xStart, yStart, screenDistance).unit();
