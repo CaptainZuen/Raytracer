@@ -6,14 +6,14 @@
 
 namespace rt = rayTracer;
 #define scr st::vector<st::vector<rt::Vec3D>>
-
+#define scrFut st::vector<st::vector<st::shared_future<rt::Vec3D>>>
 
 namespace rayTracer{
 
 class RayScanner{
     protected:
         VPO objects;
-        static const int bounceLimit = 100;
+        int const bounceLimit = 100;
 
     public:
 
@@ -21,8 +21,9 @@ class RayScanner{
 
         //rendering
         scr scan(num const screenDistance, num const screenWidth, num const screenHeight, int const pixelWidth, int const pixelHeight, int const raysPPixel);
-        
-        
+        scrFut scanMulti(num const screenDistance, num const screenWidth, num const screenHeight, int const pixelWidth, int const pixelHeight, int const raysPPixel);
+        scr scanTest(num const screenDistance, num const screenWidth, num const screenHeight, int const pixelWidth, int const pixelHeight, int const raysPPixel);
+        scr scanTestRow(num const screenDistance, num const screenWidth, num const screenHeight, int const pixelWidth, int const pixelHeight, int const raysPPixel);
 
         void addObject(Object* object);
 

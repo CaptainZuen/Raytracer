@@ -1,5 +1,5 @@
 output: main.o vec3D.o ray.o objects.o rayScanner.o io.o
-	g++ -std=c++17 main.o vec3D.o ray.o objects.o rayScanner.o io.o -o rayTracer
+	g++ -std=c++17 -pthread main.o vec3D.o ray.o objects.o rayScanner.o io.o -o rayTracer
 
 main.o: main.cpp main.hpp
 	g++ -c main.cpp

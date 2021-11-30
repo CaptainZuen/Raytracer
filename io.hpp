@@ -12,8 +12,10 @@ class IO{
     public:
         IO();
 
-        void print(scr const &screen, num const aspect, bool const numbers, bool const cross); //add row and col numbers and/or cross in the middle
-        void print(st::string const fileName, scr const &screen, num const aspect, bool const numbers, bool const cross);
+        void terminal(scr const &screen, num const &aspect, bool const &numbers, bool const &cross) const; //add row and col numbers and/or cross in the middle
+        void ascii(st::string const &fileName, scr const &screen, num const &aspect, bool const &numbers, bool const &cross) const;
+        void ppm(st::string const &fileName, scr const &screen) const;
+        void ppm(st::string const &fileName, scrFut const &screen) const;
 
-        void ppm(st::string const fileName, scr const &screen);
+        void file(st::string const &fileName, st::string const &text) const;
 };

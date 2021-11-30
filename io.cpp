@@ -3,7 +3,7 @@
 IO::IO(){
 }
 
-void IO::print(scr const &screen, num const aspect, bool const numbers, bool const cross){
+void IO::terminal(scr const &screen, num const &aspect, bool const &numbers, bool const &cross) const{
     int pixelHeight = screen.size();
     int pixelWidth = screen[0].size();
 
@@ -46,7 +46,7 @@ void IO::print(scr const &screen, num const aspect, bool const numbers, bool con
     }
 }
 
-void IO::print(st::string fileName, scr const &screen, num const aspect, bool const numbers, bool const cross){
+void IO::ascii(st::string const &fileName, scr const &screen, num const &aspect, bool const &numbers, bool const &cross) const{
     st::ofstream file;
     file.open(fileName + ".txt", st::ios::out | st::ios::trunc);
 
@@ -91,7 +91,7 @@ void IO::print(st::string fileName, scr const &screen, num const aspect, bool co
     file.close();
 }
 
-void IO::ppm(st::string fileName, scr const &screen){
+void IO::ppm(st::string const &fileName, scr const &screen) const{
     st::ofstream file;
     file.open("scenes/" + fileName + ".ppm", st::ios::out | st::ios::trunc);
 
@@ -112,6 +112,48 @@ void IO::ppm(st::string fileName, scr const &screen){
         }
         file << '\n';
     }
+
+    file.close();
+}
+
+void IO::ppm(st::string const &fileName, scrFut const &screen) const{
+    st::ofstream file;
+    file.open("scenes/" + fileName + ".ppm", st::ios::out | st::ios::trunc);
+
+    int pixelHeight = screen.size();
+    int pixelWidth = screen[0].size();
+
+    //P3 ppm format (rgb in ascii), 255 being max value
+    file << "P3\n" << pixelWidth << ' ' << pixelHeight << "\n255\n\n";
+
+    int old = -1;
+    st::cout << "Printing image\n";
+    
+    for(int row = 0; row < pixelHeight; row++){
+
+        int progress = static_cast<int>(static_cast<num>(row)/pixelHeight*100);
+
+        if(progress > old){
+            st::cout << "Progress: " << progress << "%\n";
+            old = progress;
+        }
+        for(int col = 0; col < pixelWidth; col++){
+            rt::Vec3D temp = screen[row][col].get();
+            file    << static_cast<int>(temp[0]*255.999) << ' ' 
+                    << static_cast<int>(temp[1]*255.999) << ' ' 
+                    << static_cast<int>(temp[2]*255.999) << '\n';
+            
+        }
+        file << '\n';
+    }
+
+    file.close();
+}
+
+void IO::file(st::string const &fileName, st::string const &text) const{
+    st::ofstream file;
+    file.open(fileName + ".txt", st::ios::out | st::ios::app);
+    file << text << '\n';
 
     file.close();
 }

@@ -8,6 +8,11 @@ Read from file
 ppm to png
 multithreading
 vec3D rotates
+inline!!
+
+Object* sortedX
+Object* sortedY
+Object* sortedZ
 
 
 */
@@ -21,6 +26,7 @@ vec3D rotates
 #include <limits>
 #include <stdlib.h>
 #include <time.h>
+#include <future>   //throws mult def exception when included elsewhere
 
 #include "vec3D.hpp"
 

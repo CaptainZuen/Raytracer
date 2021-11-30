@@ -1,7 +1,7 @@
 #include <list>
 #include <chrono>
 
-#include <thread>
+#include <future>
 
 #include "main.hpp"
 #include "objects/objects.hpp"
@@ -23,9 +23,9 @@ int main () {
     
     //Size of the rendered image
     
-    static const int pW = 400;           //Pixels wide
-    static const int pH = 400;           //Pixels high
-    static const int rpP = 10;           //Rays per pixel
+    static const int pW = 2000;           //Pixels wide
+    static const int pH = 2000;           //Pixels high
+    static const int rpP = 500;           //Rays per pixel
 
     //only for ascii prints
     static const num aspect = 1;         //Aspect ratio of width to height (i.e. cmd chars are 8x16, so 2)
@@ -107,27 +107,39 @@ int main () {
     // min.show("min");
 
 
-
     st::chrono::duration<double, st::milli> time;
     st::chrono::_V2::system_clock::time_point start;
     st::chrono::_V2::system_clock::time_point end;
     int count = 1;
 
+    bool const multi = true;
+
+    start = Clock::now();
     for(int i = 0; i < count; i++){
-        start = Clock::now();
+        
+        scr screen_1 = rs.scanTestRow(d, w, h, pW, pH, rpP);
+        io.ppm("Scene_1_multi", screen_1);
+
+        // if(multi){
+        //     scrFut screen_1 = rs.scanMulti(d, w, h, pW, pH, rpP);
+        //     io.ppm("Scene_1_multi", screen_1);
+        // } else{
+        //     scr screen_1 = rs.scan(d, w, h, pW, pH, rpP);
+        //     io.ppm("Scene_1", screen_1);
+        // }
+        
 
 
-        scr screen_1 = rs.scan(d, w, h, pW, pH, rpP);
-        io.ppm("Scene_1", screen_1);
 
-
-
-        end = Clock::now();
-        time+= end-start;
     }
+    end = Clock::now();
+    time = end-start;
 
     st::cout << "Average over " << count << ": " << (time/count).count() << "ms\n";
 
+    st::string stats = st::to_string(pW) + '\t' + st::to_string(pH) + '\t' + st::to_string(rpP);
+    stats += '\t' + st::to_string(count) + '\t' + st::to_string(static_cast<int>((time/count).count())) + '\t' + st::to_string(multi);
+    io.file("scenes/Stats", stats);
 
     return 0;
 }
