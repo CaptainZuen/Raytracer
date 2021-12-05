@@ -16,16 +16,18 @@ int main () {
     IO io = IO();
     srand(time(NULL));
 
-    static const num d = 3;              //Distance to screen
-    static const num w = 2;              //Width of screen
-    static const num h = 2;              //Heigth of screen
+    static const num d = 2;              //Distance to screen
+    static const num w = 2.5;              //Width of screen
+    static const num h = 2.5;              //Heigth of screen
 
     
     //Size of the rendered image
     
-    static const int pW = 2000;           //Pixels wide
-    static const int pH = 2000;           //Pixels high
-    static const int rpP = 500;           //Rays per pixel
+    static const int pW = 1000;           //Pixels wide
+    static const int pH = 1000;           //Pixels high
+    static const int rpP = 20;           //Rays per pixel
+
+    bool const multi = false;
 
     //only for ascii prints
     static const num aspect = 1;         //Aspect ratio of width to height (i.e. cmd chars are 8x16, so 2)
@@ -112,24 +114,16 @@ int main () {
     st::chrono::_V2::system_clock::time_point end;
     int count = 1;
 
-    bool const multi = true;
 
     start = Clock::now();
     for(int i = 0; i < count; i++){
         
-        scr screen_1 = rs.scanTestRow(d, w, h, pW, pH, rpP);
-        io.ppm("Scene_1_multi", screen_1);
-
-        // if(multi){
-        //     scrFut screen_1 = rs.scanMulti(d, w, h, pW, pH, rpP);
-        //     io.ppm("Scene_1_multi", screen_1);
-        // } else{
-        //     scr screen_1 = rs.scan(d, w, h, pW, pH, rpP);
-        //     io.ppm("Scene_1", screen_1);
-        // }
-        
-
-
+        st::string filename = "Scene_" + st::to_string(i+1);
+        if(multi){
+            io.ppm(filename, rs.scan(d, w, h, pW, pH, rpP));
+        } else{
+            io.ppm(filename, rs.scanSingle(d, w, h, pW, pH, rpP));
+        }       
 
     }
     end = Clock::now();

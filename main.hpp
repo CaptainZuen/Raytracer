@@ -4,11 +4,14 @@ ray en objects includen elkaar?
 hoe netjes? liever dubbel voor duidelijkheid?
 ifndef??
 
+-multithreading
+-vec3D rotates
+
 Read from file
 ppm to png
-multithreading
-vec3D rotates
 inline!!
+ray depth dynamic
+
 
 Object* sortedX
 Object* sortedY

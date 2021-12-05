@@ -13,17 +13,15 @@ namespace rayTracer{
 class RayScanner{
     protected:
         VPO objects;
-        int const bounceLimit = 100;
+        int const bounceLimit = 15;
 
     public:
 
         RayScanner();
 
         //rendering
+        scr scanSingle(num const screenDistance, num const screenWidth, num const screenHeight, int const pixelWidth, int const pixelHeight, int const raysPPixel);
         scr scan(num const screenDistance, num const screenWidth, num const screenHeight, int const pixelWidth, int const pixelHeight, int const raysPPixel);
-        scrFut scanMulti(num const screenDistance, num const screenWidth, num const screenHeight, int const pixelWidth, int const pixelHeight, int const raysPPixel);
-        scr scanTest(num const screenDistance, num const screenWidth, num const screenHeight, int const pixelWidth, int const pixelHeight, int const raysPPixel);
-        scr scanTestRow(num const screenDistance, num const screenWidth, num const screenHeight, int const pixelWidth, int const pixelHeight, int const raysPPixel);
 
         void addObject(Object* object);
 
