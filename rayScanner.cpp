@@ -13,14 +13,14 @@ void RayScanner::addObject(Object* object){
 
 
 
-scr RayScanner::scanSingle(num const screenDistance, num const screenWidth, num const screenHeight, int const pixelWidth, int const pixelHeight, int const raysPPixel){
+scr RayScanner::scanSingle(const num screenDistance, const num screenWidth, const num screenHeight, const int pixelWidth, const int pixelHeight, const int raysPPixel){
     scr screen;
     screen.reserve(screenHeight);
 
-    num const halfPixelWidth = 0.5*(screenWidth/pixelWidth);
-    num const halfPixelHeight = 0.5*(screenHeight/pixelHeight);
-    num const offsetX = screenWidth/2 + halfPixelWidth;
-    num const offsetY = screenHeight/2 + halfPixelHeight;
+    const num halfPixelWidth = 0.5*(screenWidth/pixelWidth);
+    const num halfPixelHeight = 0.5*(screenHeight/pixelHeight);
+    const num offsetX = screenWidth/2 + halfPixelWidth;
+    const num offsetY = screenHeight/2 + halfPixelHeight;
 
     int old = -1;
 
@@ -61,11 +61,11 @@ scr RayScanner::scanSingle(num const screenDistance, num const screenWidth, num 
 
 
 
-st::vector<Vec3D> rowScan(VPO objects, num const bounceLimit, num const screenDistance, num const screenWidth, num const screenHeight, int const pixelWidth, int const pixelHeight, int const raysPPixel, int const row){
-    num static const halfPixelWidth = 0.5*(screenWidth/pixelWidth);
-    num static const halfPixelHeight = 0.5*(screenHeight/pixelHeight);
-    num static const offsetX = screenWidth/2 + halfPixelWidth;
-    num static const offsetY = screenHeight/2 + halfPixelHeight;
+st::vector<Vec3D> rowScan(VPO objects, const num bounceLimit, const num screenDistance, const num screenWidth, const num screenHeight, const int pixelWidth, const int pixelHeight, const int raysPPixel, const int row){
+    static const num halfPixelWidth = 0.5*(screenWidth/pixelWidth);
+    static const num halfPixelHeight = 0.5*(screenHeight/pixelHeight);
+    static const num offsetX = screenWidth/2 + halfPixelWidth;
+    static const num offsetY = screenHeight/2 + halfPixelHeight;
     
     
     st::vector<Vec3D> temp;
@@ -90,7 +90,7 @@ st::vector<Vec3D> rowScan(VPO objects, num const bounceLimit, num const screenDi
     return temp;
 }
 
-scr RayScanner::scan(num const screenDistance, num const screenWidth, num const screenHeight, int const pixelWidth, int const pixelHeight, int const raysPPixel){
+scr RayScanner::scan(const num screenDistance, const num screenWidth, const num screenHeight, const int pixelWidth, const int pixelHeight, const int raysPPixel){
     
     int old = -1;
 

@@ -3,7 +3,7 @@
 IO::IO(){
 }
 
-void IO::terminal(scr const &screen, num const &aspect, bool const &numbers, bool const &cross) const{
+void IO::terminal(const scr &screen, const num &aspect, const bool &numbers, const bool &cross) const{
     int pixelHeight = screen.size();
     int pixelWidth = screen[0].size();
 
@@ -36,8 +36,8 @@ void IO::terminal(scr const &screen, num const &aspect, bool const &numbers, boo
                 st::cout << '|';
             } else{
                 //prints the char relative to the brightness
-                int const colAspect = static_cast<int>(col/aspect);
-                num const temp = (screen[row][colAspect][0] + screen[row][colAspect][1] + screen[row][colAspect][2])/3;
+                const int colAspect = static_cast<int>(col/aspect);
+                const num temp = (screen[row][colAspect][0] + screen[row][colAspect][1] + screen[row][colAspect][2])/3;
                 st::cout << chars[(temp*chars.size())-1];
             }
             
@@ -46,7 +46,7 @@ void IO::terminal(scr const &screen, num const &aspect, bool const &numbers, boo
     }
 }
 
-void IO::ascii(st::string const &fileName, scr const &screen, num const &aspect, bool const &numbers, bool const &cross) const{
+void IO::ascii(const st::string &fileName, const scr &screen, const num &aspect, const bool &numbers, const bool &cross) const{
     st::ofstream file;
     file.open(fileName + ".txt", st::ios::out | st::ios::trunc);
 
@@ -91,7 +91,7 @@ void IO::ascii(st::string const &fileName, scr const &screen, num const &aspect,
     file.close();
 }
 
-void IO::ppm(st::string const &fileName, scr const &screen) const{
+void IO::ppm(const st::string &fileName, const scr &screen) const{
     st::ofstream file;
     file.open("scenes/" + fileName + ".ppm", st::ios::out | st::ios::trunc);
 
@@ -116,41 +116,8 @@ void IO::ppm(st::string const &fileName, scr const &screen) const{
     file.close();
 }
 
-void IO::ppm(st::string const &fileName, scrFut const &screen) const{
-    st::ofstream file;
-    file.open("scenes/" + fileName + ".ppm", st::ios::out | st::ios::trunc);
 
-    int pixelHeight = screen.size();
-    int pixelWidth = screen[0].size();
-
-    //P3 ppm format (rgb in ascii), 255 being max value
-    file << "P3\n" << pixelWidth << ' ' << pixelHeight << "\n255\n\n";
-
-    int old = -1;
-    st::cout << "Printing image\n";
-    
-    for(int row = 0; row < pixelHeight; row++){
-
-        int progress = static_cast<int>(static_cast<num>(row)/pixelHeight*100);
-
-        if(progress > old){
-            st::cout << "Progress: " << progress << "%\n";
-            old = progress;
-        }
-        for(int col = 0; col < pixelWidth; col++){
-            rt::Vec3D temp = screen[row][col].get();
-            file    << static_cast<int>(temp[0]*255.999) << ' ' 
-                    << static_cast<int>(temp[1]*255.999) << ' ' 
-                    << static_cast<int>(temp[2]*255.999) << '\n';
-            
-        }
-        file << '\n';
-    }
-
-    file.close();
-}
-
-void IO::file(st::string const &fileName, st::string const &text) const{
+void IO::file(const st::string &fileName, const st::string &text) const{
     st::ofstream file;
     file.open(fileName + ".txt", st::ios::out | st::ios::app);
     file << text << '\n';

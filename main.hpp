@@ -11,11 +11,13 @@ Read from file
 ppm to png
 inline!!
 ray depth dynamic
+new iets()
 
 
 Object* sortedX
 Object* sortedY
 Object* sortedZ
+boxes /intersects edge to next box?
 
 
 */

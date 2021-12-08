@@ -3,12 +3,12 @@
 
 namespace rayTracer{
 
-Object::Object(num const x, num const y, num const z, num const r, num const g, num const b, int const reflection):
+Object::Object(const num x, const num y, const num z, const num r, const num g, const num b, const int reflection):
     center (x, y, z),
     color (r, g, b),
     reflection (reflection){
 }
-Object::Object(Vec3D const center, Vec3D const color, int const reflection):
+Object::Object(const Vec3D center, const Vec3D color, const int reflection):
     center (center),
     color (color),
     reflection (reflection){   
@@ -18,7 +18,7 @@ Vec3D Object::getColor(){
     return color;
 }
 
-Vec3D Object::bounce(Vec3D const &dir, Vec3D const &hitPoint) const{
+Vec3D Object::bounce(const Vec3D &dir, const Vec3D &hitPoint) const{
     switch(reflection){
         case 1:
             return this->reflectMirrored(dir, hitPoint);
@@ -30,7 +30,7 @@ Vec3D Object::bounce(Vec3D const &dir, Vec3D const &hitPoint) const{
     return Vec3D();
 }
 
-Vec3D Object::reflectMirrored(Vec3D const &dir, Vec3D const &hitPoint) const{
+Vec3D Object::reflectMirrored(const Vec3D &dir, const Vec3D &hitPoint) const{
     Vec3D normal = this->normalOut(hitPoint);
     if(normal.dot(dir) > 0.){
         normal = -normal;
@@ -38,7 +38,7 @@ Vec3D Object::reflectMirrored(Vec3D const &dir, Vec3D const &hitPoint) const{
     return dir - 2*dir.dot(normal)*normal;
 }
 
-Vec3D Object::reflectDiffuse(Vec3D const &dir, Vec3D const &hitPoint) const{
+Vec3D Object::reflectDiffuse(const Vec3D &dir, const Vec3D &hitPoint) const{
     Vec3D normal = this->normalOut(hitPoint);
     if(normal.dot(dir) > 0.){
         normal = -normal;
@@ -55,21 +55,21 @@ Vec3D Object::reflectDiffuse(Vec3D const &dir, Vec3D const &hitPoint) const{
 //Sphere::
 
 
-Sphere::Sphere(num const x, num const y, num const z, num const r, num const g, num const b, num const radius, int const reflection):
+Sphere::Sphere(const num x, const num y, const num z, const num r, const num g, const num b, const num radius, const int reflection):
     Object(x, y, z, r, g, b, reflection),
     radius (radius){
 }
-Sphere::Sphere(Vec3D const center, Vec3D const color, num const radius, int const reflection):
+Sphere::Sphere(const Vec3D center, const Vec3D color, const num radius, const int reflection):
     Object(center, color, reflection),
     radius (radius){
 }
 
 
-Vec3D Sphere::normalOut(Vec3D const &hitPoint) const{
+Vec3D Sphere::normalOut(const Vec3D &hitPoint) const{
     return (hitPoint-center).unit();
 }
  
-num Sphere::distRay(Ray const &r) const{
+num Sphere::distRay(const Ray &r) const{
     // num t = r.dir.dot(center - r.sup);     //time on ray (dist from support/origin in direction lengths)
     // Vec3D p = r.at(t);             //Closest point to center
     // num distance = (center-p).norm();
@@ -78,7 +78,7 @@ num Sphere::distRay(Ray const &r) const{
     return (center-(r.sup + r.dir * r.dir.dot(center - r.sup))).norm();
 }
 
-num Sphere::hit(Ray const &r) const{
+num Sphere::hit(const Ray &r) const{
     num t = r.dir.dot(center - r.sup);
 
     if(t + radius < r.tMin){
@@ -97,7 +97,7 @@ num Sphere::hit(Ray const &r) const{
     return -1; 
 }
 
-Vec3D Sphere::hitPoint(Ray const &r) const{
+Vec3D Sphere::hitPoint(const Ray &r) const{
     num dis = this->distRay(r);
     // num t = r.dir.dot(center - r.sup);
      
@@ -118,7 +118,7 @@ Vec3D Sphere::hitPoint(Ray const &r) const{
 
 
 
-Floor::Floor(Vec3D const center, Vec3D const color, num const tileSize, int const reflection):
+Floor::Floor(const Vec3D center, const Vec3D color, const num tileSize, const int reflection):
     Object(center, color, reflection),
     tileSize (tileSize){
     if(center[0] != 0){
@@ -138,13 +138,13 @@ Floor::Floor(Vec3D const center, Vec3D const color, num const tileSize, int cons
     }
 }
 
-Vec3D Floor::normalOut(Vec3D const &hitPoint) const{
+Vec3D Floor::normalOut(const Vec3D &hitPoint) const{
     Vec3D temp = Vec3D();
     temp.setValue(plane, 1);
     return temp;
 }
 
-num Floor::hit(Ray const &r) const{
+num Floor::hit(const Ray &r) const{
 
     num t = (center[plane] - r.sup[plane])/r.dir[plane];
 

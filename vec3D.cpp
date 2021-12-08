@@ -17,7 +17,7 @@ Vec3D::Vec3D(num s){
     c[2] = s;
 }
 
-Vec3D::Vec3D(Vec3D const &v){
+Vec3D::Vec3D(const Vec3D &v){
     c[0] = v[0];
     c[1] = v[1];
     c[2] = v[2];
@@ -56,35 +56,35 @@ void Vec3D::show() const{
 
 
   
-Vec3D operator - (Vec3D const &v){
+Vec3D operator - (const Vec3D &v){
     return Vec3D(-v[0], -v[1], -v[2]);
 }
 
-Vec3D operator + (Vec3D const &v1, Vec3D const &v2){
+Vec3D operator + (const Vec3D &v1, const Vec3D &v2){
     return Vec3D(v1[0] + v2[0], v1[1] + v2[1], v1[2] + v2[2]);
 }
     
-Vec3D operator - (Vec3D const &v1, Vec3D const &v2){
+Vec3D operator - (const Vec3D &v1, const Vec3D &v2){
     return Vec3D(v1[0] - v2[0], v1[1] - v2[1], v1[2] - v2[2]);
 }
     
-Vec3D operator * (Vec3D const &v1, Vec3D const &v2){
+Vec3D operator * (const Vec3D &v1, const Vec3D &v2){
     return Vec3D(v1[0] * v2[0], v1[1] * v2[1], v1[2] * v2[2]);
 }
     
-Vec3D operator / (Vec3D const &v1, Vec3D const &v2){
+Vec3D operator / (const Vec3D &v1, const Vec3D &v2){
     return Vec3D(v1[0] / v2[0], v1[1] / v2[1], v1[2] / v2[2]);
 }
 
-Vec3D operator % (Vec3D const &v1, Vec3D const &v2){
+Vec3D operator % (const Vec3D &v1, const Vec3D &v2){
     return Vec3D(fmod(v1[0], v2[0]), fmod(v1[1], v2[1]), fmod(v1[2], v2[2]));
 }
     
-bool operator < (Vec3D const &v1, Vec3D const &v2){
+bool operator < (const Vec3D &v1, const Vec3D &v2){
     return v1[0] < v2[0] && v1[1] < v2[1] && v1[2] < v2[2];
 }
 
-bool operator > (Vec3D const &v1, Vec3D const &v2){
+bool operator > (const Vec3D &v1, const Vec3D &v2){
     return v1[0] > v2[0] && v1[1] > v2[1] && v1[2] > v2[2];
 }
 
@@ -104,11 +104,11 @@ Vec3D Vec3D::unit() const{
     }
 }
 
-num Vec3D::dot(Vec3D const &other) const{ 
+num Vec3D::dot(const Vec3D &other) const{ 
     return c[0]*other[0] + c[1]*other[1] + c[2]*other[2];
 } 
                                         
-Vec3D Vec3D::cross(Vec3D const &other) const{ 
+Vec3D Vec3D::cross(const Vec3D &other) const{ 
     return Vec3D( c[1]*other[2] - c[2]*other[1], c[2]*other[0] - c[0]*other[2], c[0]*other[1] - c[1]*other[0]);
 } 
 
@@ -117,11 +117,11 @@ Vec3D Vec3D::abs() const{
     return Vec3D(st::abs(c[0]), st::abs(c[1]), st::abs(c[2]));
 }
 
-num Vec3D::angle(Vec3D const &v)const {
+num Vec3D::angle(const Vec3D &v)const {
     return st::acos(this->dot(v));
 }
 
-Vec3D Vec3D::rotX(num const angle) const{
+Vec3D Vec3D::rotX(const num angle) const{
     num cos = st::cos(angle);
     num sin = st::sin(angle);
 
@@ -132,7 +132,7 @@ Vec3D Vec3D::rotX(num const angle) const{
     return Vec3D(one, two, thr);
 }
 
-Vec3D Vec3D::rotY(num const angle) const{
+Vec3D Vec3D::rotY(const num angle) const{
     num cos = st::cos(angle);
     num sin = st::sin(angle);
 
@@ -143,7 +143,7 @@ Vec3D Vec3D::rotY(num const angle) const{
     return Vec3D(one, two, thr);
 }
 
-Vec3D Vec3D::rotZ(num const angle) const{
+Vec3D Vec3D::rotZ(const num angle) const{
     num cos = st::cos(angle);
     num sin = st::sin(angle);
 

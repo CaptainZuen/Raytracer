@@ -20,11 +20,11 @@ class Ray {
         static constexpr num tMin = 0.0001;
 
         Ray(num xSup, num ySup, num zSup, num xDir, num yDir, num zDir);
-        Ray(Vec3D const &sup, Vec3D const &dir);
+        Ray(const Vec3D &sup, const Vec3D &dir);
 
-        Ray(num const xStart, num const yStart, num const screenDistance);
+        Ray(const num xStart, const num yStart, const num screenDistance);
 
-        Vec3D at(num const &t) const;
+        Vec3D at(const num &t) const;
 
         //checks objects list if it hits any, returns color
         Vec3D scan(VPO &objects, int bounce);

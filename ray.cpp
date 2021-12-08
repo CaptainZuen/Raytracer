@@ -8,16 +8,16 @@ Ray::Ray (num xSup, num ySup, num zSup, num xDir, num yDir, num zDir){
     dir = Vec3D(xDir, yDir, zDir).unit();
 }
 
-Ray::Ray (Vec3D const &sup, Vec3D const &dir)
+Ray::Ray (const Vec3D &sup, const Vec3D &dir)
     :sup (sup), dir (dir){
 }
 
-Ray::Ray(num const xStart, num const yStart, num const screenDistance){
+Ray::Ray(const num xStart, const num yStart, const num screenDistance){
     sup = Vec3D(0, 0, -screenDistance);
     dir = Vec3D(xStart, yStart, screenDistance).unit();
 }
 
-Vec3D Ray::at(num const &t) const{
+Vec3D Ray::at(const num &t) const{
     return sup + t*dir;
 }
 

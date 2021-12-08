@@ -27,7 +27,7 @@ int main () {
     static const int pH = 1000;           //Pixels high
     static const int rpP = 20;           //Rays per pixel
 
-    bool const multi = false;
+    const bool multi = false;
 
     //only for ascii prints
     static const num aspect = 1;         //Aspect ratio of width to height (i.e. cmd chars are 8x16, so 2)
@@ -66,8 +66,8 @@ int main () {
     rt::RayScanner rs = rt::RayScanner();
 
 
-    int const mirror = 1;
-    int const diffuse = 2;
+    const int  mirror = 1;
+    const int diffuse = 2;
     rt::Floor f = rt::Floor(rt::Vec3D(0, -3, 0), rt::Vec3D(0.6, 0, 1), 4, diffuse);
     rs.addObject(&f);
 
