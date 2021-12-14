@@ -11,8 +11,8 @@ namespace rayTracer{
 
 class Vec3D {
     protected:
+        // num* c = new num[3];
         num c[3];
-
 
         friend Vec3D operator - (const Vec3D &v);
         friend Vec3D operator + (const Vec3D &v1, const Vec3D &v2);
@@ -27,11 +27,31 @@ class Vec3D {
 
         Vec3D(num x, num y, num z);
         Vec3D(num s);
-        Vec3D(const Vec3D &v);
+        Vec3D(num* s);
         Vec3D();
+
+        Vec3D(const Vec3D &v);
+        // Vec3D(Vec3D &&v);
+        // ~Vec3D();
         
         num operator [] (int i) const;
-        void setValue(int index, num value);
+        num& operator [] (int i);
+
+        Vec3D& operator = (const Vec3D &v);
+        // Vec3D& operator = (Vec3D &&v);
+
+        Vec3D& operator += (const Vec3D &v);
+        Vec3D& operator *= (const Vec3D &v);
+        Vec3D& operator /= (const Vec3D &v); 
+
+        Vec3D operator - ();
+        Vec3D operator - (const Vec3D &v);
+        Vec3D operator + (const Vec3D &v);
+        Vec3D operator * (const Vec3D &v);
+        Vec3D operator / (const Vec3D &v);
+        Vec3D operator % (const Vec3D &v);
+
+        Vec3D& setValue(const num value);
 
 
         void show (st::string label) const;
@@ -40,16 +60,16 @@ class Vec3D {
 
         
         num norm () const;                          //Length from zero
-        Vec3D unit () const;                        //Vector of length 1
+        Vec3D& unit ();                             //Vector of length 1
         num dot (const Vec3D &other) const;         //Dot product
-        Vec3D cross (const Vec3D &other) const;     //Cross product
+        Vec3D& cross (const Vec3D &other);          //Cross product
 
-        Vec3D abs() const;                          //Absolute value      
+        Vec3D& abs();                               //Absolute value      
         num angle(const Vec3D &v) const;            //returns angle in rad
-        Vec3D rotX(const num angle) const;
-        Vec3D rotY(const num angle) const;
-        Vec3D rotZ(const num angle) const;
+        Vec3D& rotX(const num angle);
+        Vec3D& rotY(const num angle);
+        Vec3D& rotZ(const num angle);
 
-        Vec3D random() const;                       //return a random unit vector
+        Vec3D& random();                            //return a random unit vector
 };
 }

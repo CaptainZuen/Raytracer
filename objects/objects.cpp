@@ -140,7 +140,7 @@ Floor::Floor(const Vec3D center, const Vec3D color, const num tileSize, const in
 
 Vec3D Floor::normalOut(const Vec3D &hitPoint) const{
     Vec3D temp = Vec3D();
-    temp.setValue(plane, 1);
+    temp[plane] = 1;
     return temp;
 }
 
@@ -156,10 +156,10 @@ num Floor::hit(const Ray &r) const{
 
     // shifts over the grid on the negative axes to align
     if(p[otherPlaneOne] < 0){
-        p.setValue(otherPlaneOne, p[otherPlaneOne]-tileSize);
+        p[otherPlaneOne] -= tileSize;
     }
     if(p[otherPlaneTwo] < 0){
-        p.setValue(otherPlaneTwo, p[otherPlaneTwo]-tileSize);
+        p[otherPlaneTwo] -= tileSize;
     }
 
     Vec3D q = p % (tileSize*2);

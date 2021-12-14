@@ -27,7 +27,7 @@ class Ray {
         Vec3D at(const num &t) const;
 
         //checks objects list if it hits any, returns color
-        Vec3D scan(VPO &objects, int bounce);
+        Vec3D& scan(VPO &objects, Vec3D &color, int bounce);
 
         void show(st::string label) const;
         

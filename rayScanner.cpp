@@ -43,11 +43,13 @@ scr RayScanner::scanSingle(const num screenDistance, const num screenWidth, cons
             num yStart = -((row/static_cast<num>(pixelHeight))*screenHeight - offsetY);
             
             Vec3D pixelColors = Vec3D();
+            Vec3D random;
             for(int i = 0; i < raysPPixel; i++){
-                Vec3D random = pixelColors.random();
+                random.random();
                 num x = xStart + halfPixelWidth * random[0];
                 num y = yStart + halfPixelHeight * random[1];
-                pixelColors = pixelColors + Ray(x, y, screenDistance).scan(objects, bounceLimit);
+                random.setValue(1); //reuse Vec3D
+                pixelColors = pixelColors + Ray(x, y, screenDistance).scan(objects, random, bounceLimit);
             }
             temp.push_back(pixelColors/raysPPixel);
 
@@ -74,15 +76,17 @@ st::vector<Vec3D> rowScan(VPO objects, const num bounceLimit, const num screenDi
 
     for(int col = 0; col < pixelWidth; col++){
         
-        num xStart = (col/static_cast<num>(pixelWidth))*screenWidth - offsetX;
-        num yStart = -((row/static_cast<num>(pixelHeight))*screenHeight - offsetY);
+        const num xStart = (col/static_cast<num>(pixelWidth))*screenWidth - offsetX;
+        const num yStart = -((row/static_cast<num>(pixelHeight))*screenHeight - offsetY);
         
-        Vec3D pixelColors = Vec3D();
+        Vec3D pixelColors;
+        Vec3D random;
         for(int i = 0; i < raysPPixel; i++){
-            Vec3D random = pixelColors.random();
-            num x = xStart + halfPixelWidth * random[0];
-            num y = yStart + halfPixelHeight * random[1];
-            pixelColors = pixelColors + Ray(x, y, screenDistance).scan(objects, bounceLimit);
+            random.random();
+            const num x = xStart + halfPixelWidth * random[0];
+            const num y = yStart + halfPixelHeight * random[1];
+            random.setValue(1);
+            pixelColors += Ray(x, y, screenDistance).scan(objects, random, bounceLimit);
         }
         temp.push_back(pixelColors/raysPPixel);
 
@@ -91,33 +95,34 @@ st::vector<Vec3D> rowScan(VPO objects, const num bounceLimit, const num screenDi
 }
 
 scr RayScanner::scan(const num screenDistance, const num screenWidth, const num screenHeight, const int pixelWidth, const int pixelHeight, const int raysPPixel){
-    
-    int old = -1;
-
     scr screen;
-    screen.reserve(screenHeight);
-
-    st::cout << "Starting threads\n";
-
+    screen.reserve(pixelHeight);
     st::vector<st::shared_future<st::vector<Vec3D>>> rowFutures;
+    rowFutures.reserve(pixelHeight);
+
+    st::cout << "Starting threads" << st::endl;
+
+    int old = -1;
+    
     for(int row = 0; row < pixelHeight; row++){
         int progress = static_cast<int>(static_cast<num>(row)/pixelHeight*100);
 
         if(progress > old){
-            st::cout << "Progress: " << progress << "%\n";
+            st::cout << "Progress: " << progress << '%' << st::endl;
             old = progress;
         }
 
         rowFutures.push_back(st::async(rowScan, objects, bounceLimit, screenDistance, screenWidth, screenHeight, pixelWidth, pixelHeight, raysPPixel, row));
     }
 
+    st::cout << "Getting results" << st::endl;
     old = -1;
-
+    
     for(int row = 0; row < pixelHeight; row++){
         int progress = static_cast<int>(static_cast<num>(row)/pixelHeight*100);
 
         if(progress > old){
-            st::cout << "Progress: " << progress << "%\n";
+            st::cout << "Progress: " << progress << '%' << st::endl;
             old = progress;
         }
 

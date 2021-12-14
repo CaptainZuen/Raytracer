@@ -6,12 +6,13 @@ ifndef??
 
 -multithreading
 -vec3D rotates
+-ray depth dynamic
 
 Read from file
 ppm to png
 inline!!
-ray depth dynamic
 new iets()
+emplace back
 
 
 Object* sortedX
