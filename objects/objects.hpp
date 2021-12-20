@@ -2,6 +2,10 @@
 
 #include "../main.hpp"
 
+#include "../vec3D.hpp"
+#include "../ray.hpp"
+
+
 namespace rayTracer{
 
 class Ray;  //include eachother

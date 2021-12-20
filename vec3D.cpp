@@ -1,6 +1,6 @@
 #include "vec3D.hpp"
 
-namespace st = std;
+thread_local MyRNG* rng;
 
 
 namespace rayTracer{
@@ -270,10 +270,10 @@ Vec3D& Vec3D::rotZ(const num angle){
 }
 
 Vec3D& Vec3D::random(){
-    num r =  RAND_MAX/2;
-    c[0] = rand() - r;
-    c[1] = rand() - r;
-    c[2] = rand() - r;
+    st::uniform_real_distribution<double> dist(0.0, 1.0);
+    c[0] = dist(*rng);
+    c[1] = dist(*rng);
+    c[2] = dist(*rng);
 
     return this->unit();
 }

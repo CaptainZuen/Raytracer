@@ -1,11 +1,14 @@
 #pragma once
 #include <iterator>
 #include <list>
+#include <chrono>
 
 #include "main.hpp"
+#include "vec3D.hpp"
+#include "ray.hpp"
 
-namespace rt = rayTracer;
 #define scr st::vector<st::vector<rt::Vec3D>>
+extern thread_local MyRNG* rng;
 
 namespace rayTracer{
 

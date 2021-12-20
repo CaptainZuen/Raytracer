@@ -43,7 +43,9 @@ Vec3D Object::reflectDiffuse(const Vec3D &dir, const Vec3D &hitPoint) const{
     if(normal.dot(dir) > 0.){
         normal = -normal;
     }
-    Vec3D random = normal.random();
+
+    Vec3D random;
+    random.random();
     if(normal.dot(random) < 0.){
         random = -random;
     }
@@ -139,7 +141,7 @@ Floor::Floor(const Vec3D center, const Vec3D color, const num tileSize, const in
 }
 
 Vec3D Floor::normalOut(const Vec3D &hitPoint) const{
-    Vec3D temp = Vec3D();
+    Vec3D temp;
     temp[plane] = 1;
     return temp;
 }
@@ -164,7 +166,7 @@ num Floor::hit(const Ray &r) const{
 
     Vec3D q = p % (tileSize*2);
 
-    q = q.abs();
+    q.abs();
 
     if((q[otherPlaneOne] < tileSize && q[otherPlaneTwo] < tileSize) | (q[otherPlaneOne] >= tileSize && q[otherPlaneTwo] >= tileSize)){
         return t;

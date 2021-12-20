@@ -8,23 +8,25 @@
 #include "rayScanner.hpp"
 #include "io.hpp"
 
+#include "vec3D.hpp"
+#include "ray.hpp"
 
-typedef st::chrono::high_resolution_clock Clock;
+
 
 
 int main () {
     IO io = IO();
 
-    static const num d = 2;              //Distance to screen
-    static const num w = 2.5;              //Width of screen
-    static const num h = 2.5;              //Heigth of screen
+    static const num d = 3;              //Distance to screen
+    static const num w = 2;              //Width of screen
+    static const num h = 2;              //Heigth of screen
 
     
     //Size of the rendered image
     
-    static const int pW = 400;           //Pixels wide
-    static const int pH = 400;           //Pixels high
-    static const int rpP = 20;           //Rays per pixel
+    static const int pW = 1000;           //Pixels wide
+    static const int pH = 1000;           //Pixels high
+    static const int rpP = 50;           //Rays per pixel
 
     const bool multi = true;
 
@@ -68,15 +70,17 @@ int main () {
 
     start = Clock::now();
     for(int i = 0; i < count; i++){
-        srand(time(NULL)); // seed the random function
-        // st::string filename = "Scene_" + st::to_string(i+1);
-        st::string filename = "Scene_1";
+
+        st::string filename = "Scene_" + st::to_string(i+1);
+        // st::string filename = "Scene_1";
+
         st::cout << "Start render of " << i+1 << st::endl;
+
         if(multi){
             io.ppm(filename, rs.scan(d, w, h, pW, pH, rpP));
         } else{
             io.ppm(filename, rs.scanSingle(d, w, h, pW, pH, rpP));
-        }       
+        }
 
     }
     end = Clock::now();

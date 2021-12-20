@@ -1,5 +1,4 @@
 #include "rayScanner.hpp"
- 
 
 namespace rayTracer{
 
@@ -45,7 +44,7 @@ scr RayScanner::scanSingle(const num screenDistance, const num screenWidth, cons
             Vec3D pixelColors = Vec3D();
             Vec3D random;
             for(int i = 0; i < raysPPixel; i++){
-                random.random();
+                // random.random();
                 num x = xStart + halfPixelWidth * random[0];
                 num y = yStart + halfPixelHeight * random[1];
                 random.setValue(1); //reuse Vec3D
@@ -63,13 +62,14 @@ scr RayScanner::scanSingle(const num screenDistance, const num screenWidth, cons
 
 
 
-st::vector<Vec3D> rowScan(VPO objects, const num bounceLimit, const num screenDistance, const num screenWidth, const num screenHeight, const int pixelWidth, const int pixelHeight, const int raysPPixel, const int row){
+st::vector<Vec3D> rowScan(VPO objects, const num bounceLimit, const num screenDistance, const num screenWidth, const num screenHeight, const int pixelWidth, const int pixelHeight, const int raysPPixel, const int row, MyRNG* threadRNG){
     static const num halfPixelWidth = 0.5*(screenWidth/pixelWidth);
     static const num halfPixelHeight = 0.5*(screenHeight/pixelHeight);
     static const num offsetX = screenWidth/2 + halfPixelWidth;
     static const num offsetY = screenHeight/2 + halfPixelHeight;
     
-    
+    rng = threadRNG;
+
     st::vector<Vec3D> temp;
     temp.reserve(screenWidth);
 
@@ -103,6 +103,7 @@ scr RayScanner::scan(const num screenDistance, const num screenWidth, const num 
     st::cout << "Starting threads" << st::endl;
 
     int old = -1;
+    const st::chrono::time_point<Clock> randTime = Clock::now();
     
     for(int row = 0; row < pixelHeight; row++){
         int progress = static_cast<int>(static_cast<num>(row)/pixelHeight*100);
@@ -112,7 +113,11 @@ scr RayScanner::scan(const num screenDistance, const num screenWidth, const num 
             old = progress;
         }
 
-        rowFutures.push_back(st::async(rowScan, objects, bounceLimit, screenDistance, screenWidth, screenHeight, pixelWidth, pixelHeight, raysPPixel, row));
+        MyRNG::result_type seed = std::chrono::duration_cast<std::chrono::microseconds>(Clock::now() - randTime).count();
+        MyRNG* threadRNG = new MyRNG;
+        threadRNG->seed(seed);
+
+        rowFutures.push_back(st::async(rowScan, objects, bounceLimit, screenDistance, screenWidth, screenHeight, pixelWidth, pixelHeight, raysPPixel, row, threadRNG));
     }
 
     st::cout << "Getting results" << st::endl;

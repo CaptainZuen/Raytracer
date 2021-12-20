@@ -1,11 +1,6 @@
 #pragma once
-#include <iostream>
-#include <vector>
-#include <string> 
-#include <cmath>
 
-#define num float
-namespace st = std;
+#include "main.hpp"
 
 namespace rayTracer{
 
