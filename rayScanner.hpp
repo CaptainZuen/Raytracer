@@ -13,7 +13,7 @@ namespace rayTracer{
 class RayScanner{
     protected:
         VPO objects;
-        const int bounceLimit = 15;
+        const int depthLimit = 15;
 
     public:
 

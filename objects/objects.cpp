@@ -19,31 +19,27 @@ Vec3D Object::getColor(){
 }
 
 Vec3D Object::bounce(const Vec3D &dir, const Vec3D &hitPoint) const{
+    Vec3D normal = this->normalOut(hitPoint);
+    if(normal.dot(dir) > 0.){
+        normal = -normal;
+    }
+
     switch(reflection){
         case 1:
-            return this->reflectMirrored(dir, hitPoint);
+            return this->reflectMirrored(dir, normal);
             break;
         case 2:
-            return this->reflectDiffuse(dir, hitPoint);
+            return this->reflectDiffuse(dir, normal);
             break;
     }
     return Vec3D();
 }
 
-Vec3D Object::reflectMirrored(const Vec3D &dir, const Vec3D &hitPoint) const{
-    Vec3D normal = this->normalOut(hitPoint);
-    if(normal.dot(dir) > 0.){
-        normal = -normal;
-    }
+Vec3D Object::reflectMirrored(const Vec3D &dir, const Vec3D &normal) const{
     return dir - 2*dir.dot(normal)*normal;
 }
 
-Vec3D Object::reflectDiffuse(const Vec3D &dir, const Vec3D &hitPoint) const{
-    Vec3D normal = this->normalOut(hitPoint);
-    if(normal.dot(dir) > 0.){
-        normal = -normal;
-    }
-
+Vec3D Object::reflectDiffuse(const Vec3D &dir, const Vec3D &normal) const{
     Vec3D random;
     random.random();
     if(normal.dot(random) < 0.){

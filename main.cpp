@@ -21,7 +21,7 @@ int main () {
     
     static const int pW = 400;             //Pixels wide
     static const int pH = 400;             //Pixels high
-    static const int rpP = 10;               //Rays per pixel
+    static const int rpP = 100;               //Rays per pixel
 
     const bool multi = true;
 
@@ -37,7 +37,7 @@ int main () {
     const int  mirror = 1;
     const int diffuse = 2;
     rt::Floor f = rt::Floor(rt::Vec3D(0, -3, 0), rt::Vec3D(0.6, 0, 1), 4, diffuse);
-    rs.addObject(&f);
+    // rs.addObject(&f);
 
     st::list<rt::Sphere> Spheres;
     Spheres.push_back(rt::Sphere(rt::Vec3D(-4, -2, 16), rt::Vec3D(1, 0, 1), 1, diffuse));
@@ -66,12 +66,16 @@ int main () {
     start = Clock::now();
     for(int i = 0; i < count; i++){
 
-        st::string filename = "scenes/Scene_";
-
         st::time_t t = st::time(nullptr);
         char dateAndTime[25];
         std::strftime(dateAndTime, sizeof(dateAndTime), "%Y-%m-%d_%H-%M-%S", std::localtime(&t));
-        filename += dateAndTime;
+        
+        st::string filename = 
+            "scenes/Scene_" 
+            + st::to_string(pW) + 'x' 
+            + st::to_string(pH) + 'x'
+            + st::to_string(rpP) + '_'
+            + dateAndTime;
         
 
         st::cout << "Start render of scene " << i+1 << ": " << filename << st::endl;

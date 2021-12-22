@@ -17,7 +17,7 @@ class Ray {
         Vec3D sup; 
         Vec3D dir;
         num tMax = inf;
-        static constexpr num tMin = 0.00001;
+        static constexpr num tMin = 0.01;
 
         Ray(num xSup, num ySup, num zSup, num xDir, num yDir, num zDir);
         Ray(const Vec3D &sup, const Vec3D &dir);
@@ -27,7 +27,7 @@ class Ray {
         Vec3D at(const num &t) const;
 
         //checks objects list if it hits any, returns color
-        Vec3D& scan(VPO &objects, Vec3D &color, int bounce);
+        Vec3D& scan(VPO &objects, Vec3D &color, int depth);
 
         void show(st::string label) const;
         

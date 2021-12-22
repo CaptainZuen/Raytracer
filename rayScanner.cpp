@@ -22,6 +22,10 @@ scr RayScanner::scanSingle(const num screenDistance, const num screenWidth, cons
     const num offsetX = screenWidth/2 + halfPixelWidth;
     const num offsetY = screenHeight/2 + halfPixelHeight;
 
+    rng = new MyRNG;
+    rng->seed(time(nullptr));
+    Vec3D random;
+
     int old = -1;
 
     for(int row = 0; row < pixelHeight; row++){
@@ -29,7 +33,6 @@ scr RayScanner::scanSingle(const num screenDistance, const num screenWidth, cons
         temp.reserve(screenWidth);
         
         int progress = static_cast<int>(static_cast<num>(row)/pixelHeight*100);
-
         if(progress > old){
             st::cout << "Progress: " << progress << "%\n";
             old = progress;
@@ -42,14 +45,13 @@ scr RayScanner::scanSingle(const num screenDistance, const num screenWidth, cons
             num xStart = (col/static_cast<num>(pixelWidth))*screenWidth - offsetX;
             num yStart = -((row/static_cast<num>(pixelHeight))*screenHeight - offsetY);
             
-            Vec3D pixelColors = Vec3D();
-            Vec3D random;
+            Vec3D pixelColors;
             for(int i = 0; i < raysPPixel; i++){
-                // random.random();
+                random.random();
                 num x = xStart + halfPixelWidth * random[0];
                 num y = yStart + halfPixelHeight * random[1];
-                random.setValue(1); //reuse Vec3D
-                pixelColors = pixelColors + Ray(x, y, screenDistance).scan(objects, random, bounceLimit);
+                random.setValue(1);
+                pixelColors += Ray(x, y, screenDistance).scan(objects, random, depthLimit);
             }
             temp.push_back(pixelColors/raysPPixel);
 
@@ -63,13 +65,14 @@ scr RayScanner::scanSingle(const num screenDistance, const num screenWidth, cons
 
 
 
-st::vector<Vec3D> rowScan(VPO objects, const num bounceLimit, const num screenDistance, const num screenWidth, const num screenHeight, const int pixelWidth, const int pixelHeight, const int raysPPixel, const int row, MyRNG* threadRNG){
+st::vector<Vec3D> rowScan(VPO objects, const num depthLimit, const num screenDistance, const num screenWidth, const num screenHeight, const int pixelWidth, const int pixelHeight, const int raysPPixel, const int row, MyRNG* threadRNG){
     static const num halfPixelWidth = 0.5*(screenWidth/pixelWidth);
     static const num halfPixelHeight = 0.5*(screenHeight/pixelHeight);
     static const num offsetX = screenWidth/2 + halfPixelWidth;
     static const num offsetY = screenHeight/2 + halfPixelHeight;
     
     rng = threadRNG;
+    Vec3D random;
 
     st::vector<Vec3D> temp;
     temp.reserve(screenWidth);
@@ -81,13 +84,12 @@ st::vector<Vec3D> rowScan(VPO objects, const num bounceLimit, const num screenDi
         const num yStart = -((row/static_cast<num>(pixelHeight))*screenHeight - offsetY);
         
         Vec3D pixelColors;
-        Vec3D random;
         for(int i = 0; i < raysPPixel; i++){
             random.random();
             const num x = xStart + halfPixelWidth * random[0];
             const num y = yStart + halfPixelHeight * random[1];
             random.setValue(1);
-            pixelColors += Ray(x, y, screenDistance).scan(objects, random, bounceLimit);
+            pixelColors += Ray(x, y, screenDistance).scan(objects, random, depthLimit);
         }
         temp.push_back(pixelColors/raysPPixel);
 
@@ -107,8 +109,8 @@ scr RayScanner::scan(const num screenDistance, const num screenWidth, const num 
     const ch::time_point<Clock> randTime = Clock::now();
     
     for(int row = 0; row < pixelHeight; row++){
-        int progress = static_cast<int>(static_cast<num>(row)/pixelHeight*100);
 
+        int progress = static_cast<int>(static_cast<num>(row)/pixelHeight*100);
         if(progress > old){
             st::cout << "Progress: " << progress << '%' << st::endl;
             old = progress;
@@ -118,15 +120,15 @@ scr RayScanner::scan(const num screenDistance, const num screenWidth, const num 
         MyRNG* threadRNG = new MyRNG;
         threadRNG->seed(seed);
 
-        rowFutures.push_back(st::async(rowScan, objects, bounceLimit, screenDistance, screenWidth, screenHeight, pixelWidth, pixelHeight, raysPPixel, row, threadRNG));
+        rowFutures.push_back(st::async(rowScan, objects, depthLimit, screenDistance, screenWidth, screenHeight, pixelWidth, pixelHeight, raysPPixel, row, threadRNG));
     }
 
     st::cout << "Getting results" << st::endl;
     old = -1;
     
     for(int row = 0; row < pixelHeight; row++){
-        int progress = static_cast<int>(static_cast<num>(row)/pixelHeight*100);
 
+        int progress = static_cast<int>(static_cast<num>(row)/pixelHeight*100);
         if(progress > old){
             st::cout << "Progress: " << progress << '%' << st::endl;
             old = progress;

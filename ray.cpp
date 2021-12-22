@@ -35,8 +35,8 @@ Vec3D Ray::at(const num &t) const{
 
 
 
-Vec3D& Ray::scan(VPO &objects, Vec3D &color, int bounce){
-    if(bounce <= 0){
+Vec3D& Ray::scan(VPO &objects, Vec3D &color, int depth){
+    if(depth <= 0){
         color[0] = 0;
         color[1] = 0;
         color[2] = 0;
@@ -57,7 +57,7 @@ Vec3D& Ray::scan(VPO &objects, Vec3D &color, int bounce){
         dir = current->bounce(dir, sup);
         color *= current->getColor(); 
         if(color < 0.003906) return color; 
-        scan(objects, color, --bounce);      
+        scan(objects, color, --depth);      
         return color;
     }
 
