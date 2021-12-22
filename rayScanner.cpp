@@ -1,9 +1,10 @@
 #include "rayScanner.hpp"
+#include <future>
+
 
 namespace rayTracer{
 
 RayScanner::RayScanner(){}
-
 
 
 void RayScanner::addObject(Object* object){
@@ -103,7 +104,7 @@ scr RayScanner::scan(const num screenDistance, const num screenWidth, const num 
     st::cout << "Starting threads" << st::endl;
 
     int old = -1;
-    const st::chrono::time_point<Clock> randTime = Clock::now();
+    const ch::time_point<Clock> randTime = Clock::now();
     
     for(int row = 0; row < pixelHeight; row++){
         int progress = static_cast<int>(static_cast<num>(row)/pixelHeight*100);
@@ -113,7 +114,7 @@ scr RayScanner::scan(const num screenDistance, const num screenWidth, const num 
             old = progress;
         }
 
-        MyRNG::result_type seed = std::chrono::duration_cast<std::chrono::microseconds>(Clock::now() - randTime).count();
+        MyRNG::result_type seed = ch::duration_cast<ch::microseconds>(Clock::now() - randTime).count();
         MyRNG* threadRNG = new MyRNG;
         threadRNG->seed(seed);
 

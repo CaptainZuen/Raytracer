@@ -1,7 +1,5 @@
 #pragma once
 #include <iterator>
-#include <list>
-#include <chrono>
 
 #include "main.hpp"
 #include "vec3D.hpp"

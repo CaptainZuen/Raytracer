@@ -1,8 +1,3 @@
-#include <list>
-#include <chrono>
-
-#include <future>
-
 #include "main.hpp"
 #include "objects/objects.hpp"
 #include "rayScanner.hpp"
@@ -24,9 +19,9 @@ int main () {
     
     //Size of the rendered image
     
-    static const int pW = 1000;           //Pixels wide
-    static const int pH = 1000;           //Pixels high
-    static const int rpP = 50;           //Rays per pixel
+    static const int pW = 400;             //Pixels wide
+    static const int pH = 400;             //Pixels high
+    static const int rpP = 10;               //Rays per pixel
 
     const bool multi = true;
 
@@ -62,19 +57,24 @@ int main () {
     rs.addObjectList<rt::Sphere>(Spheres);
 
 
-    st::chrono::duration<double, st::milli> timePassed;
-    st::chrono::time_point<Clock> start;
-    st::chrono::time_point<Clock> end;
+    ch::duration<double, st::milli> timePassed;
+    ch::time_point<Clock> start;
+    ch::time_point<Clock> end;
     int count = 1;
 
 
     start = Clock::now();
     for(int i = 0; i < count; i++){
 
-        st::string filename = "Scene_" + st::to_string(i+1);
-        // st::string filename = "Scene_1";
+        st::string filename = "scenes/Scene_";
 
-        st::cout << "Start render of " << i+1 << st::endl;
+        st::time_t t = st::time(nullptr);
+        char dateAndTime[25];
+        std::strftime(dateAndTime, sizeof(dateAndTime), "%Y-%m-%d_%H-%M-%S", std::localtime(&t));
+        filename += dateAndTime;
+        
+
+        st::cout << "Start render of scene " << i+1 << ": " << filename << st::endl;
 
         if(multi){
             io.ppm(filename, rs.scan(d, w, h, pW, pH, rpP));

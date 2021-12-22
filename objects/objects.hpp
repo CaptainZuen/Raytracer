@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../main.hpp"
-
 #include "../vec3D.hpp"
 #include "../ray.hpp"
 

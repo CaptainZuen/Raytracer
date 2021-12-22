@@ -1,7 +1,7 @@
 #include "io.hpp"
 
-IO::IO(){
-}
+IO::IO(){}
+
 
 void IO::terminal(const scr &screen, const num &aspect, const bool &numbers, const bool &cross) const{
     int pixelHeight = screen.size();
@@ -92,28 +92,30 @@ void IO::ascii(const st::string &fileName, const scr &screen, const num &aspect,
 }
 
 void IO::ppm(const st::string &fileName, const scr &screen) const{
-    st::ofstream file;
-    file.open("scenes/" + fileName + ".ppm", st::ios::out | st::ios::trunc);
+    st::ofstream file(fileName + ".ppm", st::ios::out | st::ios::trunc);
+    if(file.is_open()){
 
-    int pixelHeight = screen.size();
-    int pixelWidth = screen[0].size();
+        int pixelHeight = screen.size();
+        int pixelWidth = screen[0].size();
 
-    //P3 ppm format (rgb in ascii), 255 being max value
-    file << "P3\n" << pixelWidth << ' ' << pixelHeight << "\n255\n\n";
+        //P3 ppm format (rgb in ascii), 255 being max value
+        file << "P3\n" << pixelWidth << ' ' << pixelHeight << "\n255\n";
 
-    for(int row = 0; row < pixelHeight; row++){
+        for(int row = 0; row < pixelHeight; row++){
 
-        for(int col = 0; col < pixelWidth; col++){
+            for(int col = 0; col < pixelWidth; col++){
 
-            file    << static_cast<int>(screen[row][col][0]*255.999) << ' ' 
-                    << static_cast<int>(screen[row][col][1]*255.999) << ' ' 
-                    << static_cast<int>(screen[row][col][2]*255.999) << '\n';
-            
+                file    << static_cast<uint_fast16_t>(screen[row][col][0]*255.999) << ' ' 
+                        << static_cast<uint_fast16_t>(screen[row][col][1]*255.999) << ' ' 
+                        << static_cast<uint_fast16_t>(screen[row][col][2]*255.999) << '\n';
+            }
+            file << '\n';
         }
-        file << '\n';
-    }
+        file.close();
 
-    file.close();
+    } else {
+        st::cout << "Couldn't create: " << fileName << st::endl;
+    }
 }
 
 
