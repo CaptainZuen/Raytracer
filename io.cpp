@@ -118,6 +118,43 @@ void IO::ppm(const st::string &fileName, const scr &screen) const{
     }
 }
 
+// void IO::png(const char *fileName, const scr &screen) const{
+//     int pixelHeight = screen.size();
+//     int pixelWidth = screen[0].size();
+
+//     FILE *file = fopen(fileName, "wb");
+//     if (!file){
+//         st::cout << "nope" << st::endl;
+//         return;
+//     }
+
+//     // error pointers tbi
+//     png_structp png_ptr = png_create_write_struct
+//         (PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
+//     if (!png_ptr)
+//        st::cout << "nope" << st::endl;
+//         return;
+
+//     png_infop info_ptr = png_create_info_struct(png_ptr);
+//     if (!info_ptr){
+//         png_destroy_write_struct(&png_ptr,
+//             (png_infopp)NULL);
+//         st::cout << "nope" << st::endl;
+//         return;
+//     }
+
+//     for(int row = 0; row < pixelHeight; row++){
+
+//         for(int col = 0; col < pixelWidth; col++){
+
+            
+//         }
+//     }
+    
+
+    
+// }
+
 
 void IO::file(const st::string &fileName, const st::string &text) const{
     st::ofstream file;

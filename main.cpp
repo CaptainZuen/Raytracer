@@ -19,9 +19,9 @@ int main () {
     
     //Size of the rendered image
     
-    static const int pW = 400;             //Pixels wide
-    static const int pH = 400;             //Pixels high
-    static const int rpP = 100;               //Rays per pixel
+    static const int pW = 1000;             //Pixels wide
+    static const int pH = 1000;             //Pixels high
+    static const int rpP = 10;               //Rays per pixel
 
     const bool multi = true;
 
@@ -69,14 +69,13 @@ int main () {
         st::time_t t = st::time(nullptr);
         char dateAndTime[25];
         std::strftime(dateAndTime, sizeof(dateAndTime), "%Y-%m-%d_%H-%M-%S", std::localtime(&t));
-        
-        st::string filename = 
-            "scenes/Scene_" 
+
+        st::string filename = "scenes/";
+        filename.append(dateAndTime);
+        filename += '_'
             + st::to_string(pW) + 'x' 
             + st::to_string(pH) + 'x'
-            + st::to_string(rpP) + '_'
-            + dateAndTime;
-        
+            + st::to_string(rpP);
 
         st::cout << "Start render of scene " << i+1 << ": " << filename << st::endl;
 

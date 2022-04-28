@@ -14,7 +14,9 @@ ifndef??
 Read from file
 live preview?
 
+errors!
 ~~ppm to png
+
 inline!!
 new iets()
 emplace back
