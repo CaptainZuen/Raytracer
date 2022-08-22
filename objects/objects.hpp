@@ -19,12 +19,10 @@ class Object{
         Object(const Vec3D center, const Vec3D color, const int reflection);
 
         Vec3D getColor();
+        int getReflection();
 
-        virtual Vec3D normalOut(const Vec3D &hitPoint) const = 0;
+        virtual Vec3D normalOut(const Ray &ray) const = 0;
 
-        Vec3D bounce(const Vec3D &dir, const Vec3D &hitPoint) const;
-        Vec3D reflectMirrored(const Vec3D &dir, const Vec3D &hitPoint) const;
-        Vec3D reflectDiffuse(const Vec3D &dir, const Vec3D &hitPoint) const;
 
         virtual num hit(const Ray &r) const = 0;      
 
@@ -39,7 +37,7 @@ class Sphere: public Object{
         Sphere(const num x, const num y, const num z, const num r, const num g, const num b, const num radius, const int reflection);
         Sphere(const Vec3D center, const Vec3D color, const num radius, const int reflection);
 
-        Vec3D normalOut(const Vec3D &hitPoint) const;
+        Vec3D normalOut(const Ray &ray) const;
 
         num distRay(const Ray &r) const;    //distance to the ray
         num hit(const Ray &r) const;
@@ -59,7 +57,7 @@ class Floor: public Object{
 
         Floor(const Vec3D center, const Vec3D color, const num tileSize, const int reflection);
 
-        Vec3D normalOut(const Vec3D &hitPoint) const;
+        Vec3D normalOut(const Ray &ray) const;
         num hit(const Ray &r) const;
 
 

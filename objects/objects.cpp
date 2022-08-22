@@ -18,35 +18,11 @@ Vec3D Object::getColor(){
     return color;
 }
 
-Vec3D Object::bounce(const Vec3D &dir, const Vec3D &hitPoint) const{
-    Vec3D normal = this->normalOut(hitPoint);
-    if(normal.dot(dir) > 0.){
-        normal = -normal;
-    }
-
-    switch(reflection){
-        case 1:
-            return this->reflectMirrored(dir, normal);
-            break;
-        case 2:
-            return this->reflectDiffuse(dir, normal);
-            break;
-    }
-    return Vec3D();
+int Object::getReflection(){
+    return reflection;
 }
 
-Vec3D Object::reflectMirrored(const Vec3D &dir, const Vec3D &normal) const{
-    return dir - 2*dir.dot(normal)*normal;
-}
 
-Vec3D Object::reflectDiffuse(const Vec3D &dir, const Vec3D &normal) const{
-    Vec3D random;
-    random.random();
-    if(normal.dot(random) < 0.){
-        random = -random;
-    }
-    return random;
-}
 
 
 //-----------------------------------------------------------------------------------------
@@ -63,8 +39,13 @@ Sphere::Sphere(const Vec3D center, const Vec3D color, const num radius, const in
 }
 
 
-Vec3D Sphere::normalOut(const Vec3D &hitPoint) const{
-    return (hitPoint-center).unit();
+Vec3D Sphere::normalOut(const Ray &ray) const{
+    Vec3D normal = (ray.sup-center).unit();
+
+    if(normal.dot(ray.dir) > 0.){
+        normal = -normal;
+    }
+    return normal;
 }
  
 num Sphere::distRay(const Ray &r) const{
@@ -139,11 +120,11 @@ Floor::Floor(const Vec3D center, const Vec3D color, const num tileSize, const in
     }
 }
 
-Vec3D Floor::normalOut(const Vec3D &hitPoint) const{
+Vec3D Floor::normalOut(const Ray &ray) const{
+    if(normal.dot(ray.dir) > 0.){
+        return -normal;
+    }
     return normal;
-    // Vec3D temp;
-    // temp[plane] = 1;
-    // return temp;
 }
 
 num Floor::hit(const Ray &r) const{

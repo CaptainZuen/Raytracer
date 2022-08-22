@@ -33,5 +33,27 @@ Vec3D Ray::at(const num &t) const{
 }
 
 
+void Ray::bounce(const Vec3D& normal, int reflection){
+
+    switch(reflection){
+        case 1:
+            return mirrorReflect(normal);
+            break;
+        case 2:
+            return diffuseReflect(normal);
+            break;
+    }
+}
+
+void Ray::mirrorReflect(const Vec3D& normal){
+    dir = dir - 2*dir.dot(normal)*normal;
+}
+
+void Ray::diffuseReflect(const Vec3D& normal){
+    dir.random();
+    if(normal.dot(dir) < 0.){
+        dir = -dir;
+    }
+}
 }
 

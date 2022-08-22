@@ -34,7 +34,7 @@ Vec3D& rayScan(Ray ray, VPO& objects, Vec3D& color, int depth){
     }
     if(current != NULL){
         ray.sup = ray.at(ray.tMax);
-        ray.dir = current->bounce(ray.dir, ray.sup);
+        ray.bounce(current->normalOut(ray), current->getReflection());
         color *= current->getColor(); 
         if(color < 0.003906) return color; 
         rayScan(ray, objects, color, --depth);      

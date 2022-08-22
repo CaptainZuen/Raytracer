@@ -21,8 +21,11 @@ class Ray {
 
         Ray(const num xStart, const num yStart, const num screenDistance);
 
-        Vec3D at(const num &t) const;
+        Vec3D at(const num& t) const;
 
+        void bounce(const Vec3D& normal, int reflection);
+        void mirrorReflect(const Vec3D& normal);
+        void diffuseReflect(const Vec3D& normal);
 
         void show(st::string label) const;
         
