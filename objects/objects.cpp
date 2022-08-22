@@ -123,23 +123,27 @@ Floor::Floor(const Vec3D center, const Vec3D color, const num tileSize, const in
         plane = 0;
         otherPlaneOne = 1;
         otherPlaneTwo = 2; 
+        normal = Vec3D(1,0,0);
     }
     else if(center[1] != 0){
         plane = 1;
         otherPlaneOne = 0;
         otherPlaneTwo = 2;
+        normal = Vec3D(0,1,0);
     } 
     else{
         plane = 2;
         otherPlaneOne = 0;
         otherPlaneTwo = 1;
+        normal = Vec3D(0,0,1);
     }
 }
 
 Vec3D Floor::normalOut(const Vec3D &hitPoint) const{
-    Vec3D temp;
-    temp[plane] = 1;
-    return temp;
+    return normal;
+    // Vec3D temp;
+    // temp[plane] = 1;
+    // return temp;
 }
 
 num Floor::hit(const Ray &r) const{

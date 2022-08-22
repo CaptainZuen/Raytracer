@@ -33,38 +33,5 @@ Vec3D Ray::at(const num &t) const{
 }
 
 
-
-
-Vec3D& Ray::scan(VPO &objects, Vec3D &color, int depth){
-    if(depth <= 0){
-        color[0] = 0;
-        color[1] = 0;
-        color[2] = 0;
-        return color;
-    }
-
-    tMax = inf;
-    Object* current = NULL;
-    for(auto &object: objects){
-        num t = object->hit(*this);
-        if(t > tMin && t < tMax){
-            tMax = t;
-            current = object;
-        }
-    }
-    if(current != NULL){
-        sup = at(tMax);
-        dir = current->bounce(dir, sup);
-        color *= current->getColor(); 
-        if(color < 0.003906) return color; 
-        scan(objects, color, --depth);      
-        return color;
-    }
-
-    color[0] *= (1 - ((dir[1] + 1)/2) * 0.5);
-    color[1] *= (1 - ((dir[1] + 1)/2) * 0.3);
-    return color;
-
-}
 }
 

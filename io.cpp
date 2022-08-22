@@ -3,9 +3,9 @@
 IO::IO(){}
 
 
-void IO::terminal(const scr &screen, const num &aspect, const bool &numbers, const bool &cross) const{
-    int pixelHeight = screen.size();
-    int pixelWidth = screen[0].size();
+void IO::terminal(const rndr &render, const num &aspect, const bool &numbers, const bool &cross) const{
+    int pixelHeight = render.size();
+    int pixelWidth = render[0].size();
 
     if(numbers){
         st::cout << "\t ";
@@ -37,7 +37,7 @@ void IO::terminal(const scr &screen, const num &aspect, const bool &numbers, con
             } else{
                 //prints the char relative to the brightness
                 const int colAspect = static_cast<int>(col/aspect);
-                const num temp = (screen[row][colAspect][0] + screen[row][colAspect][1] + screen[row][colAspect][2])/3;
+                const num temp = (render[row][colAspect][0] + render[row][colAspect][1] + render[row][colAspect][2])/3;
                 st::cout << chars[(temp*chars.size())-1];
             }
             
@@ -46,12 +46,12 @@ void IO::terminal(const scr &screen, const num &aspect, const bool &numbers, con
     }
 }
 
-void IO::ascii(const st::string &fileName, const scr &screen, const num &aspect, const bool &numbers, const bool &cross) const{
+void IO::ascii(const st::string &fileName, const rndr &render, const num &aspect, const bool &numbers, const bool &cross) const{
     st::ofstream file;
     file.open(fileName + ".txt", st::ios::out | st::ios::trunc);
 
-    int pixelHeight = screen.size();
-    int pixelWidth = screen[0].size();
+    int pixelHeight = render.size();
+    int pixelWidth = render[0].size();
 
 
     if(numbers){
@@ -82,7 +82,7 @@ void IO::ascii(const st::string &fileName, const scr &screen, const num &aspect,
             } else if(cross && col == pixelWidth/2){
                 file << '|';
             } else{
-                file << chars[((screen[row][col][0] + screen[row][col][1] + screen[row][col][2])/3*chars.size())-1];
+                file << chars[((render[row][col][0] + render[row][col][1] + render[row][col][2])/3*chars.size())-1];
             }
         }
         file << '\n';
@@ -91,12 +91,12 @@ void IO::ascii(const st::string &fileName, const scr &screen, const num &aspect,
     file.close();
 }
 
-void IO::ppm(const st::string &fileName, const scr &screen) const{
+void IO::ppm(const st::string &fileName, const rndr &render) const{
     st::ofstream file(fileName + ".ppm", st::ios::out | st::ios::trunc);
     if(file.is_open()){
 
-        int pixelHeight = screen.size();
-        int pixelWidth = screen[0].size();
+        int pixelHeight = render.size();
+        int pixelWidth = render[0].size();
 
         //P3 ppm format (rgb in ascii), 255 being max value
         file << "P3\n" << pixelWidth << ' ' << pixelHeight << "\n255\n";
@@ -105,9 +105,9 @@ void IO::ppm(const st::string &fileName, const scr &screen) const{
 
             for(int col = 0; col < pixelWidth; col++){
 
-                file    << static_cast<uint_fast16_t>(screen[row][col][0]*255.999) << ' ' 
-                        << static_cast<uint_fast16_t>(screen[row][col][1]*255.999) << ' ' 
-                        << static_cast<uint_fast16_t>(screen[row][col][2]*255.999) << '\n';
+                file    << static_cast<uint_fast16_t>(render[row][col][0]*255.999) << ' ' 
+                        << static_cast<uint_fast16_t>(render[row][col][1]*255.999) << ' ' 
+                        << static_cast<uint_fast16_t>(render[row][col][2]*255.999) << '\n';
             }
             file << '\n';
         }
@@ -118,9 +118,9 @@ void IO::ppm(const st::string &fileName, const scr &screen) const{
     }
 }
 
-// void IO::png(const char *fileName, const scr &screen) const{
-//     int pixelHeight = screen.size();
-//     int pixelWidth = screen[0].size();
+// void IO::png(const char *fileName, const rndr &render) const{
+//     int pixelHeight = render.size();
+//     int pixelWidth = render[0].size();
 
 //     FILE *file = fopen(fileName, "wb");
 //     if (!file){
@@ -156,7 +156,7 @@ void IO::ppm(const st::string &fileName, const scr &screen) const{
 // }
 
 
-void IO::file(const st::string &fileName, const st::string &text) const{
+void IO::writeFile(const st::string &fileName, const st::string &text) const{
     st::ofstream file;
     file.open(fileName + ".txt", st::ios::out | st::ios::app);
     file << text << '\n';

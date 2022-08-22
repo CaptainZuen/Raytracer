@@ -14,14 +14,14 @@ int main () {
 
     static const num d = 3;              //Distance to screen
     static const num w = 2;              //Width of screen
-    static const num h = 2;              //Heigth of screen
+    static const num h = 2;              //height of screen
 
     
     //Size of the rendered image
     
-    static const int pW = 1000;             //Pixels wide
-    static const int pH = 1000;             //Pixels high
-    static const int rpP = 10;               //Rays per pixel
+    static const int pW = 500;             //Pixels wide
+    static const int pH = 500;             //Pixels high
+    static const int rpP = 10;             //Rays per pixel
 
     const bool multi = true;
 
@@ -31,7 +31,7 @@ int main () {
     static const bool cross = false;     //adds cross in the middle
     
 
-    rt::RayScanner rs = rt::RayScanner();
+    rt::RayScanner rs = rt::RayScanner(rt::Screen(d, w, h, pW, pH, rpP));
 
 
     const int  mirror = 1;
@@ -80,9 +80,9 @@ int main () {
         st::cout << "Start render of scene " << i+1 << ": " << filename << st::endl;
 
         if(multi){
-            io.ppm(filename, rs.scan(d, w, h, pW, pH, rpP));
+            io.ppm(filename, rs.scan());
         } else{
-            io.ppm(filename, rs.scanSingle(d, w, h, pW, pH, rpP));
+            io.ppm(filename, rs.scanSingle());
         }
 
     }
@@ -99,7 +99,7 @@ int main () {
         + st::to_string(static_cast<int>((timePassed/count).count())) + '\t' 
         + st::to_string(multi);
 
-    io.file("scenes/Stats", stats);
+    io.writeFile("scenes/Stats", stats);
 
     return 0;
 }

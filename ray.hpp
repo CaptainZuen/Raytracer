@@ -1,13 +1,10 @@
 #pragma once
 
 #include "main.hpp"
-#include "objects/objects.hpp"
+#include "vec3D.hpp"
 
-#define VPO st::vector <Object*>
 
 namespace rayTracer{
-
-class Object;   //include eachother
 
 class Ray {
     
@@ -26,8 +23,6 @@ class Ray {
 
         Vec3D at(const num &t) const;
 
-        //checks objects list if it hits any, returns color
-        Vec3D& scan(VPO &objects, Vec3D &color, int depth);
 
         void show(st::string label) const;
         

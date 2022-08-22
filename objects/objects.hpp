@@ -7,7 +7,6 @@
 
 namespace rayTracer{
 
-class Ray;  //include eachother
 
 class Object{
     protected:
@@ -54,6 +53,7 @@ class Floor: public Object{
         int plane;
         int otherPlaneOne;
         int otherPlaneTwo;
+        Vec3D normal;
 
     public:
 
