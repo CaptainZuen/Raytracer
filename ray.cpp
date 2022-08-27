@@ -37,11 +37,11 @@ void Ray::bounce(const Vec3D& normal, int reflection){
 
     switch(reflection){
         case 1:
-            return mirrorReflect(normal);
-            break;
+            mirrorReflect(normal);
+            return;
         case 2:
-            return diffuseReflect(normal);
-            break;
+            diffuseReflect(normal);
+            return;
     }
 }
 

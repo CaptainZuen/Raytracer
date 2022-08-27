@@ -49,18 +49,33 @@ Vec3D& rayScan(Ray ray, VPO& objects, Vec3D& color, int depth){
 
 Vec3D pixelScan(VPO& objects, Screen scr, const num xStart, const num yStart, const int depthLimit){
     Vec3D pixelColors;
+    const num halfSubPixelWidth = scr.halfpixelWidth / scr.subPixelRoot;
+    const num halfSubPixelHeight = scr.halfpixelHeight / scr.subPixelRoot;
 
-        for(int i = 0; i < scr.raysPPixel; i++){
-            Vec3D vec3D = Vec3D().random();
+    for(int sH = 0; sH < scr.subPixelRoot; sH++){
+        for(int sW = 0; sW < scr.subPixelRoot; sW++){
+            const num subXStart = xStart - (scr.subPixelRoot - 1 - 2*sW) * halfSubPixelWidth; 
+            const num subYStart = yStart - (scr.subPixelRoot - 1 - 2*sH) * halfSubPixelHeight;
 
-            const num x = xStart + scr.halfpixelsWide * vec3D[0];
-            const num y = yStart + scr.halfpixelsHigh * vec3D[1];
+            // st::cout << xStart << " -X- " << subXStart << '\n';
+            // st::cout << yStart << " -Y- " << subYStart << '\n';
 
-            vec3D = Vec3D(1);
-            pixelColors += rayScan(Ray(x, y, scr.distance), objects, vec3D, depthLimit);
+            for(int i = 0; i < scr.raysPPixel; i++){
+                Vec3D vec3D = Vec3D().random();
+
+                const num x = subXStart + halfSubPixelWidth * vec3D[0];
+                const num y = subYStart + halfSubPixelHeight * vec3D[1];
+
+                vec3D = Vec3D(1);
+                pixelColors += rayScan(Ray(x, y, scr.distance), objects, vec3D, depthLimit);
+            }
         }
+
+    }
+
+        
     
-    return pixelColors/scr.raysPPixel;
+    return pixelColors/(scr.raysPPixel*scr.subPixelRoot*scr.subPixelRoot);
 }
 
 
@@ -94,13 +109,14 @@ rndr RayScanner::scanSingle(){
             num xStart = (col/static_cast<num>(scr.pixelsWide))*scr.width - scr.offsetX;
             num yStart = -((row/static_cast<num>(scr.pixelsHigh))*scr.height - scr.offsetY);
             
+            // st::cout << scr.offsetX << " - " << xStart << " - " << yStart << '\n';
+
             temp.push_back(pixelScan(objects, scr, xStart, yStart, depthLimit));
 
         }
         render.push_back(temp);
     }
 
-    st::cout << "Done!\n";
     return render;
 }
 
@@ -168,7 +184,7 @@ rndr RayScanner::scan(){
 
         render.push_back(rowFutures[row].get());
     }
-    st::cout << "Done!\n";
+
     return render;
     
 }

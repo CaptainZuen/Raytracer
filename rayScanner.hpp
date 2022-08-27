@@ -20,19 +20,21 @@ struct Screen{
     const int pixelsWide = 0;
     const int pixelsHigh = 0;
 
+    const int subPixelRoot = 0;
     const int raysPPixel = 0;
 
-    const num halfpixelsWide = 0.5*(width/pixelsWide);
-    const num halfpixelsHigh = 0.5*(height/pixelsHigh);
-    const num offsetX = width/2 + halfpixelsWide;
-    const num offsetY = height/2 + halfpixelsHigh;
+    const num halfpixelWidth = 0.5*(width/pixelsWide);
+    const num halfpixelHeight = 0.5*(height/pixelsHigh);
+    const num offsetX = width/2 - halfpixelWidth;
+    const num offsetY = height/2 - halfpixelHeight;
 
-    Screen(const num distance, const num width, const num height, const int pixelsWide, const int pixelsHigh, const int raysPPixel):
+    Screen(const num distance, const num width, const num height, const int pixelsWide, const int pixelsHigh, const int subPixelRoot, const int raysPPixel):
     distance (distance),
     width (width),
     height (height),
     pixelsWide (pixelsWide),
     pixelsHigh (pixelsHigh),
+    subPixelRoot (subPixelRoot),
     raysPPixel (raysPPixel){
     }
 

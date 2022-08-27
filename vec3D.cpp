@@ -270,10 +270,12 @@ Vec3D& Vec3D::rotZ(const num angle){
 }
 
 Vec3D& Vec3D::random(){
-    st::uniform_real_distribution<double> dist(0.0, 1.0);
-    c[0] = dist(*rng);
-    c[1] = dist(*rng);
-    c[2] = dist(*rng);
+    st::uniform_real_distribution<double> dist(-1.0, 1.0);
+    do{
+        c[0] = dist(*rng);
+        c[1] = dist(*rng);
+        c[2] = dist(*rng);
+    } while (this->norm() > 1);
 
     return this->unit();
 }

@@ -9,7 +9,7 @@
 
 
 
-int main () {
+int main (int argc, char *argv[]) {
     IO io = IO();
 
     static const num d = 3;              //Distance to screen
@@ -19,9 +19,15 @@ int main () {
     
     //Size of the rendered image
     
-    static const int pW = 500;             //Pixels wide
-    static const int pH = 500;             //Pixels high
-    static const int rpP = 10;             //Rays per pixel
+    if(argc != 5) {
+        st::cout << "Error: Include 4 arguments for width, height, root of subpixels and rays per pixel\n";
+        return 1;
+    }
+
+    static const int pW = st::atoi(argv[1]);             //Pixels wide
+    static const int pH = st::atoi(argv[2]);             //Pixels high
+    static const int sPR = st::atoi(argv[3]);             //Subpixel root, to form a square of subpixels
+    static const int rpP = st::atoi(argv[4]);             //Rays per (sub)pixel
 
     const bool multi = true;
 
@@ -31,7 +37,7 @@ int main () {
     static const bool cross = false;     //adds cross in the middle
     
 
-    rt::RayScanner rs = rt::RayScanner(rt::Screen(d, w, h, pW, pH, rpP));
+    rt::RayScanner rs = rt::RayScanner(rt::Screen(d, w, h, pW, pH, sPR, rpP));
 
 
     const int  mirror = 1;
@@ -84,6 +90,8 @@ int main () {
         } else{
             io.ppm(filename, rs.scanSingle());
         }
+
+        st::cout << "Done with scene " << i+1 << ": " << filename << st::endl;
 
     }
     end = Clock::now();
