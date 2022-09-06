@@ -1,4 +1,4 @@
-#include "vec3D.hpp"
+#include "../vec3D.hpp"
 
 thread_local MyRNG* rng;
 

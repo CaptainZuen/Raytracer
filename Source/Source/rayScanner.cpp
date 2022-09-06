@@ -1,4 +1,4 @@
-#include "rayScanner.hpp"
+#include "../rayScanner.hpp"
 #include <future>
 
 

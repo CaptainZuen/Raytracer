@@ -4,7 +4,7 @@
 #include "main.hpp"
 #include "vec3D.hpp"
 #include "ray.hpp"
-#include "objects/objects.hpp"
+#include "objects.hpp"
 
 #define VPO st::vector <Object*>
 #define rndr st::vector<st::vector<rt::Vec3D>>

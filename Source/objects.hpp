@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../main.hpp"
-#include "../vec3D.hpp"
-#include "../ray.hpp"
+#include "main.hpp"
+#include "vec3D.hpp"
+#include "ray.hpp"
 
 
 namespace rayTracer{

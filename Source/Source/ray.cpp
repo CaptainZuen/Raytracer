@@ -1,4 +1,4 @@
-#include "ray.hpp"
+#include "../ray.hpp"
 
 
 namespace rayTracer{

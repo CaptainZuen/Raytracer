@@ -1,23 +1,28 @@
-output: main.o vec3D.o ray.o objects.o rayScanner.o io.o
-	g++ -std=c++17 -pthread main.o vec3D.o ray.o objects.o rayScanner.o io.o -o rayTracer
+s := Source/
+ss := Source/Source/
+so := Source/.o/
 
-main.o: main.cpp main.hpp
-	g++ -c main.cpp
+output: $(so)main.o $(so)vec3D.o $(so)ray.o $(so)objects.o $(so)rayScanner.o $(so)io.o
+	g++ -std=c++17 -pthread $(so)main.o $(so)vec3D.o $(so)ray.o $(so)objects.o $(so)rayScanner.o $(so)io.o -o rayTracer
 
-vec3D.o: vec3D.cpp vec3D.hpp
-	g++ -c vec3D.cpp
+$(so)main.o: $(s)main.cpp $(s)main.hpp
+	g++ -o $(so)main.o -c $(s)main.cpp
 
-ray.o: ray.cpp ray.hpp
-	g++ -c ray.cpp
+$(so)vec3D.o: $(ss)vec3D.cpp $(s)vec3D.hpp
+	g++ -o $(so)vec3D.o -c $(ss)vec3D.cpp
 
-objects.o: objects/objects.cpp objects/objects.hpp
-	g++ -c objects/objects.cpp
+$(so)ray.o: $(ss)ray.cpp $(s)ray.hpp
+	g++ -o $(so)ray.o -c $(ss)ray.cpp
 
-rayScanner.o: rayScanner.cpp rayScanner.hpp
-	g++ -c rayScanner.cpp
+$(so)objects.o: $(ss)objects/objects.cpp $(s)objects.hpp
+	g++ -o $(so)objects.o -c $(ss)objects/objects.cpp
 
-io.o: io.cpp io.hpp
-	g++ -c io.cpp
+$(so)rayScanner.o: $(ss)rayScanner.cpp $(s)rayScanner.hpp
+	g++ -o $(so)rayScanner.o -c $(ss)rayScanner.cpp
+
+$(so)io.o: $(ss)io.cpp $(s)io.hpp
+	g++ -o $(so)io.o -c $(ss)io.cpp
 
 clean:
-	del *.o rayTracer
+	del rayTracer.exe
+	cd $(so) && del *.o
